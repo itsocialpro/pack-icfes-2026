@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pack ICFES 2026 · Grupo Académico ICFES</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --blue: #1a3a7a;
+    --gold: #f5c000;
+    --gold2: #e8a800;
+    --white: #ffffff;
+    --bg: #f4f6fb;
+    --text: #1a1a2e;
+    --muted: #6a7090;
+    --green: #1a8a50;
+    --red: #cc2020;
+    --border: #dde2f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; }
+
+  /* ── BARRA URGENCIA ── */
+  .urgency-bar {
+    background:var(--red);
+    color:#fff;
+    text-align:center;
+    padding:10px 16px;
+    font-family:'Syne',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .urgency-bar .countdown {
+    background:rgba(0,0,0,.25);
+    border-radius:6px;
+    padding:4px 14px;
+    font-size:18px;
+    letter-spacing:2px;
+    font-weight:800;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, var(--navy) 0%, #0f2050 60%, #1a3a7a 100%);
+    color:#fff;
+    padding:60px 20px 70px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; top:-80px; right:-80px;
+    width:400px; height:400px;
+    background:radial-gradient(circle, rgba(245,192,0,.15) 0%, transparent 70%);
+    pointer-events:none;
+  }
+
+  .brand-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:100px; padding:6px 16px;
+    font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; margin-bottom:28px;
+  }
+  .brand-badge img {
+    width:24px; height:24px; border-radius:50%; object-fit:cover;
+  }
+
+  .hero h1 {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(30px,6vw,56px);
+    font-weight:800;
+    line-height:1.05;
+    margin-bottom:16px;
+  }
+  .hero h1 .gold { color:var(--gold); }
+
+  .hero .sub {
+    font-size:18px; color:rgba(255,255,255,.8);
+    max-width:560px; margin:0 auto 36px;
+    line-height:1.6;
+  }
+
+  /* precio hero */
+  .price-hero {
+    display:inline-flex; flex-direction:column; align-items:center;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px; padding:24px 40px;
+    margin-bottom:28px;
+  }
+  .price-before {
+    font-size:16px; color:rgba(255,255,255,.5);
+    text-decoration:line-through; margin-bottom:4px;
+  }
+  .price-now-label {
+    font-size:12px; color:var(--gold); letter-spacing:2px;
+    text-transform:uppercase; font-family:'Syne',sans-serif;
+    margin-bottom:6px;
+  }
+  .price-now {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(44px,8vw,72px);
+    font-weight:800;
+    color:var(--gold);
+    line-height:1;
+  }
+  .price-currency { font-size:22px; vertical-align:super; margin-right:2px; }
+  .price-note { font-size:13px; color:rgba(255,255,255,.5); margin-top:6px; }
+
+  .btn-cta-hero {
+    display:inline-block;
+    background:var(--gold);
+    color:var(--navy);
+    font-family:'Syne',sans-serif;
+    font-size:18px; font-weight:800;
+    border:none; border-radius:14px;
+    padding:20px 48px;
+    cursor:pointer;
+    text-decoration:none;
+    transition:all .2s;
+    box-shadow:0 8px 32px rgba(245,192,0,.4);
+    margin-bottom:16px;
+  }
+  .btn-cta-hero:hover { background:#ffd020; transform:translateY(-3px); box-shadow:0 12px 40px rgba(245,192,0,.5); }
+
+  .guarantee-note {
+    font-size:13px; color:rgba(255,255,255,.5);
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+
+  /* ── SOCIAL PROOF ── */
+  .social-strip {
+    background:var(--navy);
+    padding:16px 20px;
+    display:flex; align-items:center; justify-content:center;
+    gap:32px; flex-wrap:wrap;
+  }
+  .social-strip .stat {
+    text-align:center; color:#fff;
+  }
+  .stat-num { font-family:'Syne',sans-serif; font-size:24px; font-weight:800; color:var(--gold); }
+  .stat-label { font-size:12px; color:rgba(255,255,255,.6); margin-top:2px; }
+
+  /* ── SECCIONES ── */
+  .section { padding:64px 20px; max-width:800px; margin:0 auto; }
+
+  .section-label {
+    font-family:'Syne',sans-serif; font-size:11px;
+    letter-spacing:3px; text-transform:uppercase;
+    color:var(--muted); margin-bottom:12px;
+  }
+  .section h2 {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(24px,4vw,36px);
+    font-weight:800; line-height:1.15;
+    margin-bottom:16px;
+  }
+  .section h2 .gold { color:var(--gold2); }
+  .section h2 .blue { color:var(--blue); }
+
+  /* problema */
+  .problem-list { display:flex; flex-direction:column; gap:14px; margin-top:24px; }
+  .problem-item {
+    background:#fff; border:1px solid var(--border);
+    border-left:4px solid var(--red);
+    border-radius:10px; padding:16px 18px;
+    font-size:15px; display:flex; gap:12px; align-items:flex-start;
+  }
+  .problem-item .pi { flex-shrink:0; font-size:18px; }
+
+  /* lo que incluye */
+  .includes-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:14px; margin-top:28px;
+  }
+  .include-card {
+    background:#fff; border:1px solid var(--border);
+    border-radius:14px; padding:20px;
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .include-icon {
+    width:44px; height:44px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; flex-shrink:0;
+    background:linear-gradient(135deg,#e8f0fa,#d0e0f5);
+  }
+  .include-title {
+    font-family:'Syne',sans-serif; font-size:14px; font-weight:700;
+    margin-bottom:4px;
+  }
+  .include-desc { font-size:13px; color:var(--muted); line-height:1.5; }
+
+  /* simulador CTA */
+  .simulador-box {
+    background:linear-gradient(135deg,var(--navy),#0f2050);
+    border-radius:20px; padding:40px 32px;
+    text-align:center; color:#fff; margin:48px 0;
+  }
+  .simulador-box h3 {
+    font-family:'Syne',sans-serif; font-size:24px;
+    color:var(--gold); margin-bottom:10px;
+  }
+  .simulador-box p { font-size:15px; color:rgba(255,255,255,.7); margin-bottom:24px; }
+  .btn-sim {
+    display:inline-block; background:rgba(255,255,255,.1);
+    border:2px solid rgba(255,255,255,.3);
+    color:#fff; font-family:'Syne',sans-serif;
+    font-size:14px; font-weight:700;
+    border-radius:10px; padding:14px 32px;
+    text-decoration:none; cursor:pointer;
+    transition:all .2s;
+  }
+  .btn-sim:hover { background:rgba(255,255,255,.2); border-color:#fff; }
+
+  /* testimonios */
+  .testimonios-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:14px; margin-top:28px;
+  }
+  .testimonio {
+    background:#fff; border:1px solid var(--border);
+    border-radius:14px; padding:20px;
+  }
+  .t-stars { color:var(--gold); font-size:16px; margin-bottom:8px; }
+  .t-text { font-size:14px; color:#404060; line-height:1.6; margin-bottom:12px; font-style:italic; }
+  .t-name { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:var(--blue); }
+  .t-city { font-size:12px; color:var(--muted); }
+
+  /* CTA final */
+  .cta-section {
+    background:linear-gradient(160deg,var(--navy),#0f2050);
+    padding:80px 20px;
+    text-align:center;
+  }
+  .cta-section h2 {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(26px,5vw,44px);
+    color:#fff; margin-bottom:16px;
+  }
+  .cta-section h2 .gold { color:var(--gold); }
+  .cta-section p { color:rgba(255,255,255,.7); font-size:16px; margin-bottom:36px; max-width:480px; margin-left:auto; margin-right:auto; }
+
+  .price-final-wrap {
+    display:inline-flex; flex-direction:column; align-items:center;
+    margin-bottom:28px;
+  }
+  .price-final-before {
+    font-size:18px; color:rgba(255,255,255,.4);
+    text-decoration:line-through; margin-bottom:4px;
+  }
+  .price-final-now {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(52px,10vw,84px);
+    font-weight:800; color:var(--gold); line-height:1;
+  }
+  .price-final-label {
+    font-size:13px; color:rgba(255,255,255,.5); margin-top:4px;
+  }
+
+  .btn-cta-final {
+    display:inline-block;
+    background:var(--gold);
+    color:var(--navy);
+    font-family:'Syne',sans-serif;
+    font-size:20px; font-weight:800;
+    border:none; border-radius:16px;
+    padding:22px 56px;
+    cursor:pointer;
+    text-decoration:none;
+    transition:all .2s;
+    box-shadow:0 8px 40px rgba(245,192,0,.5);
+    margin-bottom:16px;
+    display:block; max-width:400px; margin:0 auto 16px;
+  }
+  .btn-cta-final:hover { background:#ffd020; transform:translateY(-3px); }
+
+  .guarantee-box {
+    display:inline-flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:12px; padding:12px 20px;
+    margin-top:16px;
+    font-size:14px; color:rgba(255,255,255,.7);
+  }
+
+  /* footer */
+  footer {
+    background:var(--navy); color:rgba(255,255,255,.4);
+    text-align:center; padding:24px 20px;
+    font-size:12px;
+  }
+
+  /* countdown grande CTA */
+  .cta-countdown {
+    font-family:'Syne',sans-serif;
+    font-size:13px; color:rgba(255,255,255,.6);
+    margin-bottom:20px;
+  }
+  .cta-countdown .cd-time {
+    color:var(--gold); font-size:28px; font-weight:800;
+    display:block; margin-top:4px; letter-spacing:3px;
+  }
+
+  @media(max-width:560px){
+    .includes-grid, .testimonios-grid { grid-template-columns:1fr; }
+    .social-strip { gap:20px; }
+    .btn-cta-hero { padding:18px 28px; font-size:16px; }
+    .simulador-box { padding:28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BARRA URGENCIA -->
+<div class="urgency-bar">
+  🔥 OFERTA ESPECIAL — SOLO HOY HASTA LAS 11PM:
+  <span class="countdown" id="countdown-bar">00:00:00</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="brand-badge">
+    🎓 Grupo Académico ICFES · Saber 11
+  </div>
+
+  <h1>El pack que más estudiantes<br>han usado para subir su<br><span class="gold">puntaje ICFES</span></h1>
+
+  <p class="sub">Exámenes reales, videos explicativos, plan de estudio y diagnóstico personalizado. Todo lo que necesitas para el Saber 11 — en un solo lugar.</p>
+
+  <div class="price-hero">
+    <div class="price-before">Precio normal: $187.000 COP</div>
+    <div class="price-now-label">⚡ Solo hoy hasta las 11PM</div>
+    <div class="price-now">
+      <span class="price-currency">$</span>47.000
+    </div>
+    <div class="price-note">COP · Acceso inmediato por WhatsApp</div>
+  </div>
+
+  <a class="btn-cta-hero" href="https://wa.me/573178359725?text=Hola!%20Vi%20la%20oferta%20del%20Pack%20ICFES%202026%20y%20quiero%20comprarlo%20al%20precio%20de%20hoy%20%F0%9F%91%8D" target="_blank">
+    Quiero el Pack completo →
+  </a>
+
+  <div class="guarantee-note">🔒 Pago seguro · Entrega inmediata por WhatsApp</div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<div class="social-strip">
+  <div class="stat">
+    <div class="stat-num">+500</div>
+    <div class="stat-label">Estudiantes preparados</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5 áreas</div>
+    <div class="stat-label">del ICFES cubiertas</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Exámenes reales incluidos</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">⭐ 4.9</div>
+    <div class="stat-label">Calificación promedio</div>
+  </div>
+</div>
+
+<!-- PROBLEMA -->
+<div class="section">
+  <div class="section-label">¿Te identificas?</div>
+  <h2>El ICFES se acerca y todavía<br>no sabes <span class="gold">por dónde empezar</span></h2>
+  <div class="problem-list">
+    <div class="problem-item"><span class="pi">😰</span><span>Buscas material en Google pero todo está disperso, incompleto o desactualizado</span></div>
+    <div class="problem-item"><span class="pi">📚</span><span>Tienes PDFs guardados que nunca terminas de leer porque son aburridos y no te explican por qué</span></div>
+    <div class="problem-item"><span class="pi">⏰</span><span>Sientes que el tiempo se acaba y no sabes en qué área enfocarte primero</span></div>
+    <div class="problem-item"><span class="pi">😟</span><span>El estrés del examen te bloquea y no sabes cómo manejarlo</span></div>
+  </div>
+</div>
+
+<!-- LO QUE INCLUYE -->
+<div style="background:#fff; padding:0 0 64px;">
+<div class="section" style="padding-top:64px">
+  <div class="section-label">Solución completa</div>
+  <h2>Todo lo que necesitas para el<br><span class="blue">Saber 11 en un solo Pack</span></h2>
+
+  <div class="includes-grid">
+    <div class="include-card">
+      <div class="include-icon">🎬</div>
+      <div>
+        <div class="include-title">Videos de clase</div>
+        <div class="include-desc">Clases explicadas de Biología, Química y Matemáticas. Con ejemplos paso a paso.</div>
+      </div>
+    </div>
+    <div class="include-card">
+      <div class="include-icon">📝</div>
+      <div>
+        <div class="include-title">Exámenes reales 2019, 2020 y 2021</div>
+        <div class="include-desc">Practica con preguntas oficiales del ICFES con respuestas explicadas.</div>
+      </div>
+    </div>
+    <div class="include-card">
+      <div class="include-icon">📅</div>
+      <div>
+        <div class="include-title">Plan de estudio PDF</div>
+        <div class="include-desc">Cronograma semana a semana para organizar tu preparación antes del examen.</div>
+      </div>
+    </div>
+    <div class="include-card">
+      <div class="include-icon">🧘</div>
+      <div>
+        <div class="include-title">Taller manejo del estrés</div>
+        <div class="include-desc">Técnicas prácticas para controlar la ansiedad antes y durante el examen.</div>
+      </div>
+    </div>
+    <div class="include-card">
+      <div class="include-icon">📓</div>
+      <div>
+        <div class="include-title">Cuadernillos de apoyo</div>
+        <div class="include-desc">Material de práctica por materia con ejercicios tipo ICFES resueltos.</div>
+      </div>
+    </div>
+    <div class="include-card" style="border:2px solid var(--gold); background:#fffbea;">
+      <div class="include-icon" style="background:linear-gradient(135deg,#fff8d0,#ffe88a);">🎯</div>
+      <div>
+        <div class="include-title" style="color:var(--gold2)">BONO: Diagnóstico ICFES</div>
+        <div class="include-desc">Mini-App interactiva que identifica tus áreas débiles en 10 minutos. ¡Gratis con el Pack!</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SIMULADOR BOX -->
+<div class="section">
+  <div class="simulador-box">
+    <h3>🎯 ¿No sabes en qué área estás más débil?</h3>
+    <p>Haz el diagnóstico gratuito ahora mismo. En 10 minutos descubrirás exactamente qué necesitas estudiar antes del ICFES.</p>
+    <a class="btn-sim" href="simulador-icfes-2026.html" target="_blank">Hacer diagnóstico gratuito →</a>
+  </div>
+</div>
+
+<!-- TESTIMONIOS -->
+<div style="background:#fff; padding:0 0 64px;">
+<div class="section" style="padding-top:64px">
+  <div class="section-label">Lo que dicen los estudiantes</div>
+  <h2>Resultados <span class="gold">reales</span> de estudiantes<br>que usaron el Pack</h2>
+
+  <div class="testimonios-grid">
+    <div class="testimonio">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-text">"Subí 40 puntos en matemáticas después de practicar con los exámenes reales. Los videos explicativos son clarísimos, mucho mejor que buscar en YouTube."</div>
+      <div class="t-name">Valentina M.</div>
+      <div class="t-city">Bogotá · Grado 11</div>
+    </div>
+    <div class="testimonio">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-text">"El taller de manejo del estrés me cambió la vida. Antes me bloqueaba en el examen, ahora sé exactamente qué hacer cuando me entra el pánico."</div>
+      <div class="t-name">Sebastián R.</div>
+      <div class="t-city">Medellín · Grado 11</div>
+    </div>
+    <div class="testimonio">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-text">"El plan de estudio me organizó completamente. Antes estudiaba al azar, ahora sé exactamente qué hacer cada día. Lo recomiendo 100%."</div>
+      <div class="t-name">Daniela C.</div>
+      <div class="t-city">Cali · Grado 11</div>
+    </div>
+    <div class="testimonio">
+      <div class="t-stars">★★★★★</div>
+      <div class="t-text">"Por $47.000 es una locura lo que incluye. Tenía miedo de que fuera básico pero tiene todo lo que necesitas para prepararte bien."</div>
+      <div class="t-name">Miguel A.</div>
+      <div class="t-city">Barranquilla · Grado 11</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-section">
+  <h2>El ICFES no espera.<br><span class="gold">Tú tampoco deberías.</span></h2>
+  <p>Esta oferta vence hoy a las 11PM. Después el precio vuelve a $187.000 COP.</p>
+
+  <div class="cta-countdown">
+    ⏰ Esta oferta vence en:
+    <span class="cd-time" id="countdown-final">00:00:00</span>
+  </div>
+
+  <div class="price-final-wrap">
+    <div class="price-final-before">Antes: $187.000 COP</div>
+    <div class="price-final-now">$47.000</div>
+    <div class="price-final-label">COP · Pago único · Acceso inmediato</div>
+  </div>
+
+  <a class="btn-cta-final" href="https://wa.me/573178359725?text=Hola!%20Vi%20la%20oferta%20del%20Pack%20ICFES%202026%20y%20quiero%20comprarlo%20al%20precio%20de%20hoy%20%F0%9F%91%8D" target="_blank">
+    Quiero el Pack completo →
+  </a>
+
+  <div class="guarantee-box">
+    🔒 Pago seguro · Entrega inmediata por WhatsApp · Soporte directo
+  </div>
+</div>
+
+<footer>
+  © 2026 Grupo Académico ICFES · Preparación inteligente para el Saber 11<br>
+  <span style="color:rgba(255,255,255,.25)">WhatsApp: +57 317 835 9725</span>
+</footer>
+
+<script>
+// ── CONTADOR DE URGENCIA ──
+// Calcula tiempo hasta las 11PM de hoy
+function getTarget() {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(23, 0, 0, 0); // 11PM
+  if (now >= target) target.setDate(target.getDate() + 1); // si ya pasó, mañana
+  return target;
+}
+
+function updateCountdowns() {
+  const now = new Date();
+  const diff = getTarget() - now;
+
+  if (diff <= 0) {
+    ['countdown-bar','countdown-final'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '00:00:00';
+    });
+    return;
+  }
+
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const str = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+
+  ['countdown-bar','countdown-final'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = str;
+  });
+}
+
+updateCountdowns();
+setInterval(updateCountdowns, 1000);
+</script>
+</body>
+</html>
