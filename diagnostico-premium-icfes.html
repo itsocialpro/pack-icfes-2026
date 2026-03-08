@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Premium ICFES 2026 · Grupo Académico ICFES</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --navy:#0a1628; --blue:#1a3a7a; --gold:#f5c000; --gold2:#e8a800;
+    --white:#fff; --bg:#f4f6fb; --text:#1a1a2e; --muted:#6a7090;
+    --green:#1a8a50; --red:#cc2020; --border:#dde2f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
+
+  /* ── LOGIN ── */
+  #screen-login{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,var(--navy),#0f2050);padding:24px;
+  }
+  .login-box{
+    background:#fff;border-radius:24px;padding:48px 40px;
+    max-width:440px;width:100%;text-align:center;
+    box-shadow:0 32px 80px rgba(0,0,0,.3);
+  }
+  .login-logo{
+    font-family:'Syne',sans-serif;font-size:13px;letter-spacing:2px;
+    color:var(--muted);margin-bottom:24px;text-transform:uppercase;
+  }
+  .login-icon{font-size:48px;margin-bottom:16px;}
+  .login-box h2{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:8px;}
+  .login-box p{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6;}
+
+  .input-group{margin-bottom:16px;text-align:left;}
+  .input-group label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px;font-family:'Syne',sans-serif;font-weight:700;}
+  .input-group input{
+    width:100%;padding:14px 16px;border:2px solid var(--border);
+    border-radius:10px;font-size:15px;font-family:'DM Sans',sans-serif;
+    outline:none;transition:border .2s;
+  }
+  .input-group input:focus{border-color:var(--blue);}
+  .login-error{
+    background:#fde8e8;border:1px solid #f0b0b0;color:#6a1010;
+    border-radius:8px;padding:10px 14px;font-size:13px;
+    margin-bottom:16px;display:none;
+  }
+  .btn-login{
+    width:100%;background:var(--navy);color:#fff;
+    font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
+    border:none;border-radius:12px;padding:16px;cursor:pointer;
+    transition:all .2s;margin-bottom:16px;
+  }
+  .btn-login:hover{background:var(--blue);}
+  .login-help{font-size:12px;color:var(--muted);}
+  .login-help a{color:var(--blue);text-decoration:none;}
+
+  /* ── NOMBRE ── */
+  #screen-nombre{
+    min-height:100vh;display:none;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,var(--navy),#0f2050);padding:24px;
+  }
+
+  /* ── QUIZ ── */
+  #screen-quiz{display:none;min-height:100vh;flex-direction:column;}
+
+  .quiz-header{
+    background:var(--white);border-bottom:1px solid var(--border);
+    padding:14px 24px;display:flex;align-items:center;
+    justify-content:space-between;gap:16px;
+    position:sticky;top:0;z-index:10;
+  }
+  .premium-badge{
+    background:var(--gold);color:var(--navy);
+    font-family:'Syne',sans-serif;font-size:11px;font-weight:800;
+    padding:4px 12px;border-radius:100px;letter-spacing:1px;
+  }
+  .area-tag{
+    font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+    padding:4px 12px;border-radius:100px;letter-spacing:1px;
+  }
+  .progress-wrap{flex:1;max-width:320px;}
+  .progress-label{font-size:12px;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between;}
+  .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--navy);border-radius:3px;transition:width .4s;}
+  .timer{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;min-width:60px;text-align:right;}
+  .timer.warning{color:var(--red);}
+
+  .quiz-body{flex:1;padding:32px 20px;max-width:720px;margin:0 auto;width:100%;}
+  .q-number{font-size:12px;color:var(--muted);font-family:'Syne',sans-serif;letter-spacing:1px;margin-bottom:12px;}
+  .q-text{font-size:17px;line-height:1.65;margin-bottom:28px;color:var(--text);}
+  .context-block{
+    background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold2);
+    border-radius:8px;padding:16px 18px;margin-bottom:20px;
+    font-size:14px;color:#404040;line-height:1.7;max-height:160px;overflow-y:auto;
+  }
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    background:var(--white);border:2px solid var(--border);border-radius:12px;
+    padding:16px 18px;cursor:pointer;transition:all .15s;
+    font-size:15px;line-height:1.5;display:flex;align-items:flex-start;gap:12px;text-align:left;
+  }
+  .option:hover{border-color:var(--navy);background:#fafaf8;}
+  .option.selected{border-color:var(--navy);background:#f0ede8;}
+  .option.correct{border-color:var(--green);background:#e8f8ee;}
+  .option.wrong{border-color:var(--red);background:#fde8e8;}
+  .option-letter{
+    width:28px;height:28px;border-radius:50%;flex-shrink:0;
+    background:var(--border);color:var(--muted);
+    font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;margin-top:1px;
+  }
+  .option.selected .option-letter{background:var(--navy);color:#fff;}
+  .option.correct .option-letter{background:var(--green);color:#fff;}
+  .option.wrong .option-letter{background:var(--red);color:#fff;}
+
+  .feedback-box{
+    margin-top:20px;padding:16px 18px;border-radius:10px;
+    font-size:14px;line-height:1.6;display:none;
+  }
+  .feedback-box.correct{background:#e8f8ee;border:1px solid #a0d8b8;color:#1a4a30;}
+  .feedback-box.wrong{background:#fde8e8;border:1px solid #f0b0b0;color:#6a1010;}
+  .fb-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;margin-bottom:6px;}
+
+  .quiz-footer{
+    padding:20px 24px;background:var(--white);border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  }
+  .btn-next{
+    background:var(--navy);color:#fff;font-family:'Syne',sans-serif;
+    font-size:14px;font-weight:700;border:none;border-radius:10px;
+    padding:14px 32px;cursor:pointer;transition:all .15s;display:none;
+  }
+  .btn-next:hover{background:var(--blue);}
+  .btn-skip{
+    background:none;border:1px solid var(--border);color:var(--muted);
+    font-size:13px;border-radius:8px;padding:10px 20px;cursor:pointer;
+  }
+
+  /* ── RESULTADOS ── */
+  #screen-results{display:none;padding:40px 20px;max-width:760px;margin:0 auto;}
+
+  .result-hero{text-align:center;margin-bottom:48px;}
+  .student-name-result{
+    font-family:'Syne',sans-serif;font-size:13px;color:var(--muted);
+    letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;
+  }
+  .score-circle{
+    width:150px;height:150px;border-radius:50%;border:6px solid var(--navy);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    margin:0 auto 24px;
+  }
+  .score-num{font-family:'Syne',sans-serif;font-size:46px;font-weight:800;line-height:1;}
+  .score-den{font-size:14px;color:var(--muted);}
+  .result-hero h2{font-family:'Syne',sans-serif;font-size:26px;margin-bottom:8px;}
+  .result-hero p{color:var(--muted);font-size:15px;}
+
+  .areas-results{display:flex;flex-direction:column;gap:14px;margin-bottom:40px;}
+  .area-result{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+  .area-result-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .area-result-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
+  .area-result-score{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+  .area-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+  .area-bar-fill{height:100%;border-radius:4px;transition:width 1s .3s;}
+  .area-detail{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.5;}
+
+  .recomendaciones{
+    background:var(--navy);color:#fff;border-radius:16px;padding:28px;margin-bottom:32px;
+  }
+  .recomendaciones h3{font-family:'Syne',sans-serif;font-size:16px;color:var(--gold);margin-bottom:16px;}
+  .rec-item{display:flex;gap:12px;margin-bottom:12px;font-size:14px;color:#c0c0d0;align-items:flex-start;}
+
+  .pdf-section{
+    background:linear-gradient(135deg,#fff8e0,#fff);
+    border:2px solid var(--gold);border-radius:16px;
+    padding:32px;text-align:center;margin-bottom:32px;
+  }
+  .pdf-section h3{font-family:'Syne',sans-serif;font-size:20px;margin-bottom:8px;}
+  .pdf-section p{font-size:14px;color:var(--muted);margin-bottom:24px;}
+  .btn-pdf{
+    background:var(--gold);color:var(--navy);
+    font-family:'Syne',sans-serif;font-size:16px;font-weight:800;
+    border:none;border-radius:12px;padding:18px 40px;
+    cursor:pointer;transition:all .2s;display:inline-block;
+    box-shadow:0 8px 24px rgba(245,192,0,.4);
+  }
+  .btn-pdf:hover{background:#ffd020;transform:translateY(-2px);}
+
+  .btn-reiniciar{
+    background:none;border:2px solid var(--navy);color:var(--navy);
+    font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+    border-radius:10px;padding:14px 32px;cursor:pointer;
+    display:block;margin:0 auto;
+  }
+
+  @media(max-width:480px){
+    .quiz-header{flex-wrap:wrap;gap:8px;}
+    .progress-wrap{order:3;width:100%;max-width:100%;}
+    .login-box{padding:32px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PANTALLA LOGIN
+══════════════════════════════════════ -->
+<div id="screen-login">
+  <div class="login-box">
+    <div class="login-logo">🎓 Grupo Académico ICFES</div>
+    <div class="login-icon">🔐</div>
+    <h2>Diagnóstico Premium</h2>
+    <p>Esta herramienta es exclusiva para estudiantes que adquirieron el <strong>Pack ICFES 2026</strong>. Ingresa tu contraseña de acceso.</p>
+
+    <div class="input-group">
+      <label>CONTRASEÑA DE ACCESO</label>
+      <input type="password" id="password-input" placeholder="Ingresa tu contraseña" onkeydown="if(event.key==='Enter') verificarPassword()">
+    </div>
+    <div class="login-error" id="login-error">❌ Contraseña incorrecta. Escríbenos al WhatsApp si tienes problemas.</div>
+    <button class="btn-login" onclick="verificarPassword()">Acceder al diagnóstico →</button>
+    <div class="login-help">
+      ¿No tienes acceso? <a href="https://wa.me/573178359725?text=Hola!%20Quiero%20el%20Pack%20ICFES%202026" target="_blank">Adquiere el Pack aquí</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANTALLA NOMBRE
+══════════════════════════════════════ -->
+<div id="screen-nombre" style="display:none;min-height:100vh;align-items:center;justify-content:center;background:linear-gradient(160deg,#0a1628,#0f2050);padding:24px;">
+  <div class="login-box">
+    <div class="login-logo">🎓 Grupo Académico ICFES</div>
+    <div class="login-icon">👋</div>
+    <h2>¡Bienvenido/a!</h2>
+    <p>Antes de comenzar, dinos tu nombre para personalizar tu diagnóstico y el PDF con tus resultados.</p>
+    <div class="input-group">
+      <label>TU NOMBRE COMPLETO</label>
+      <input type="text" id="nombre-input" placeholder="Ej: Valentina García" onkeydown="if(event.key==='Enter') comenzarConNombre()">
+    </div>
+    <button class="btn-login" onclick="comenzarConNombre()">Comenzar diagnóstico →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANTALLA QUIZ
+══════════════════════════════════════ -->
+<div id="screen-quiz">
+  <div class="quiz-header">
+    <span class="premium-badge">⭐ PREMIUM</span>
+    <span class="area-tag" id="area-tag">Lectura Crítica</span>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="prog-texto">Pregunta 1 de 40</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="timer" id="timer">20:00</div>
+  </div>
+
+  <div class="quiz-body">
+    <div class="q-number" id="q-number">PREGUNTA 1</div>
+    <div class="context-block" id="context-block" style="display:none"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="options" id="options-container"></div>
+    <div class="feedback-box" id="feedback-box">
+      <div class="fb-title" id="fb-title"></div>
+      <div id="fb-texto"></div>
+    </div>
+  </div>
+
+  <div class="quiz-footer">
+    <button class="btn-skip" onclick="saltarPregunta()">Saltar →</button>
+    <button class="btn-next" id="btn-next" onclick="siguientePregunta()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANTALLA RESULTADOS
+══════════════════════════════════════ -->
+<div id="screen-results">
+  <div class="result-hero">
+    <div class="student-name-result" id="student-name-result"></div>
+    <div class="score-circle" id="score-circle">
+      <div class="score-num" id="score-num">0</div>
+      <div class="score-den" id="score-den">de 40</div>
+    </div>
+    <h2 id="result-titulo">Tu resultado</h2>
+    <p id="result-sub"></p>
+  </div>
+
+  <div class="areas-results" id="areas-results"></div>
+  <div class="recomendaciones" id="recomendaciones"></div>
+
+  <div class="pdf-section">
+    <h3>📄 Descarga tu diagnóstico personalizado</h3>
+    <p>Guarda tu resultado en PDF con tu nombre, puntuación y plan de acción recomendado para el ICFES.</p>
+    <button class="btn-pdf" onclick="descargarPDF()">⬇️ Descargar mi diagnóstico en PDF</button>
+  </div>
+
+  <button class="btn-reiniciar" onclick="reiniciar()">↺ Repetir diagnóstico</button>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// CONTRASEÑA (cámbiala cuando quieras)
+// ══════════════════════════════════════
+const PASSWORD = "icfes2026";
+let nombreEstudiante = "";
+
+// ══════════════════════════════════════
+// BANCO DE 40 PREGUNTAS REALES
+// ══════════════════════════════════════
+const preguntas = [
+  // LECTURA CRÍTICA — 10 preguntas
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:`Eduardo Galeano. "Un Planeta Descartable": "La humanidad entera paga las consecuencias de la ruina de la tierra... el veinticinco por ciento de la humanidad quien comete el setenta y cinco por ciento de los crímenes contra la naturaleza."`,
+   texto:"En el texto de Galeano, el autor usa 'enloquecimiento del clima', 'derramar lágrimas', 'la naturaleza sufre'. Este recurso se llama:",
+   opciones:["Personificación","Analogía","Prosopografía","Hipérbole"],correcta:0,
+   explicacion:"La personificación atribuye cualidades humanas a seres inanimados. El clima 'enloquece', la naturaleza 'sufre' son acciones exclusivamente humanas atribuidas a elementos naturales."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:null,
+   texto:"Según el texto de Galeano, ¿en conclusión qué busca el texto?",
+   opciones:["Explicar las causas del deterioro del planeta","Plantear una posición crítica sobre la situación del planeta","Plantear una posición neutral frente al planeta","Advertir las consecuencias del deterioro"],correcta:1,
+   explicacion:"El autor expone mediante argumentos su posición crítica frente al capitalismo y el consumo desmedido. No es neutral (opción C) ni solo advierte consecuencias (D)."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:`"La ventanilla del bus": Un hombre viaja en bus por Bogotá. "Baudrillard dice que un simulacro es la suplantación de lo real por los signos de lo real. No hay lo real, tan sólo la ventanilla que nos refleja."`,
+   texto:"En el texto 'La ventanilla del bus', predomina principalmente:",
+   opciones:["La descripción del entorno material de la ciudad","La narración del viaje y la presentación de reflexiones del personaje","La caracterización de la ciudad a partir del transporte público","La presentación de una teoría sobre la falsedad en la ciudad"],correcta:1,
+   explicacion:"El texto combina la narración del viaje en bus con las profundas reflexiones del narrador sobre la realidad y la identidad. No es una descripción ni una teoría, sino un relato reflexivo."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:null,
+   texto:"En 'La ventanilla del bus', cuando se dice 'nosotros, los pasajeros, suplantamos la realidad, somos el paisaje', se puede concluir que:",
+   opciones:["Los individuos de la masa son solo objetos para ser observados","Siempre que se hace parte de algo colectivo se suplanta la realidad","El concepto de paisaje se fundamenta en la inexistencia del individuo","El objeto que constituye la realidad es el mismo sujeto que la observa"],correcta:3,
+   explicacion:"Aplicando el concepto de simulacro de Baudrillard: los pasajeros no observan la realidad externa, sino que ellos mismos SE CONVIERTEN en el paisaje — son a la vez sujeto observador y objeto observado."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:`Laura Esquivel: "¿Cuánto tiempo ha pasado desde que el hombre conquistó el fuego? Demasiado... Fue alrededor del fuego donde se dio ese paso Fundamental que nos diferenció para siempre de la naturaleza salvaje."`,
+   texto:"En el texto de Laura Esquivel, el recurso expositivo principal que utiliza para desarrollar su argumentación es:",
+   opciones:["La pregunta de carácter retórico","La comparación de fenómenos culturales","La ejemplificación con detalles de la vida cotidiana","La enumeración de eventos históricos"],correcta:0,
+   explicacion:"El texto está lleno de preguntas retóricas: '¿Cuánto tiempo ha pasado?', '¿Cuánto tiempo falta para entender...?' No buscan respuesta sino invitar a la reflexión del lector."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:null,
+   texto:"Heráclito planteó que es imposible bañarse dos veces en el mismo río. El ejemplo que MEJOR expresa el planteamiento de Parménides (opuesto a Heráclito) es:",
+   opciones:["Mi cuerpo ha ido cambiando desde preescolar hasta hoy","Los compañeros de estudio que he tenido desde sexto son los mismos","Al llegar a clase siempre vemos el colegio en el mismo lugar","A pesar de los cambios en el mundo, la razón me muestra que el mundo es"],correcta:3,
+   explicacion:"Parménides afirmaba que el SER es inmutable — todo lo que es, siempre es lo mismo. La razón nos muestra la permanencia del ser más allá de los cambios aparentes que perciben los sentidos."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:`"Ciudad y Literatura": "La ciudad puede ser perfectamente un tema literario... La ciudad es la materia prima de los sueños y las pesadillas del hombre moderno."`,
+   texto:"En el texto 'Ciudad y Literatura', con el enunciado 'La ciudad puede ser perfectamente un tema literario' se:",
+   opciones:["Afirma algo que posteriormente se sustenta","Predice algo que luego se constata","Instituye algo que posteriormente se realiza","Advierte algo que luego se comprueba"],correcta:0,
+   explicacion:"'Puede ser perfectamente' es una afirmación que el autor sustenta en los párrafos siguientes con argumentos como 'La ciudad es, en sí misma, un tema literario' y ejemplos de generaciones de narradores."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:null,
+   texto:"Del segundo párrafo de 'Ciudad y Literatura' se puede concluir que:",
+   opciones:["El arte es el espejo en que se refleja la realidad del hombre","El mundo de la literatura es ajeno a la cotidianidad del hombre","En la literatura se construye la cotidianidad del hombre","En la realidad se constituyen los mundos posibles de la literatura"],correcta:3,
+   explicacion:"El párrafo dice que la ciudad es donde 'se han formado sentimental e intelectualmente muchas generaciones de narradores'. La realidad (ciudad) forma a los narradores que luego crean mundos posibles en la literatura."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:`Las Musas: "Las Musas - o la Musa, porque son una y varias a la vez- son hijas de Zeus y de Mnemosine... O. Bie sugiere que 'musa' es una abstracción en tres direcciones: sentido personificado, sentido concreto (canto, poesía) y sentido abstracto (inspiración)."`,
+   texto:"En el texto sobre Las Musas, el autor cita a O. Bie para:",
+   opciones:["Generalizar su posición a través de un ejemplo","Sustentar su posición a través de lo dicho por una autoridad en el tema","Explicar su posición a través de una relación causa-efecto","Contradecir su posición a través de una autoridad en el tema"],correcta:1,
+   explicacion:"La cita de O. Bie funciona como argumento de autoridad: el autor usa la voz de un experto para sustenter y profundizar su análisis sobre el significado de 'musa', no para contradecirlo ni ejemplificarlo."},
+
+  {area:"lc",areaNombre:"Lectura Crítica",
+   contexto:null,
+   texto:"La Ilustración sostiene que la belleza es solo una percepción de la mente y que es inútil buscar reglas universales en el arte. Esta tendencia subjetiva debe, para lograr su objetivo:",
+   opciones:["Obtener sus juicios de factores internos a la obra artística","Restringir la publicidad de métodos para adelgazar","Desconfiar totalmente de la producción artística","Resaltar los componentes emocionales de las experiencias estéticas y los componentes individuales de la creatividad"],correcta:3,
+   explicacion:"El subjetivismo estético busca 'descubrir las bases psicológicas de los fenómenos del arte tales como la imaginación y el gusto' — es decir, los componentes emocionales (estética) e individuales (creatividad)."},
+
+  // MATEMÁTICAS — 10 preguntas
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Un cartabón tiene forma de triángulo rectángulo escaleno donde la hipotenusa mide el doble del cateto menor. Si el cateto mayor mide 32 cm, ¿cuánto mide el cateto menor?",
+   opciones:["18.4 cm","16 cm","15.2 cm","19.1 cm"],correcta:0,
+   explicacion:"Sea x el cateto menor, hipotenusa = 2x. Por Pitágoras: (2x)² = x² + 32². Entonces 3x² = 1024, x = 32/√3 ≈ 18.4 cm."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"El sistema de extensiones de un hotel usa los dígitos 2, 3, 4 y 5 para extensiones de 4 dígitos. ¿Cuántas habitaciones pueden tener extensión?",
+   opciones:["24","56","120","256"],correcta:3,
+   explicacion:"Cada posición tiene 4 opciones independientes: 4×4×4×4 = 256 extensiones posibles."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Un conjunto S tiene promedio 9 y desviación estándar 3. Se crea el conjunto T sumando 4 a cada elemento. El promedio y desviación de T son:",
+   opciones:["Promedio 9, desviación 3","Promedio 13, desviación 3","Promedio 9, desviación 7","Promedio 13, desviación 7"],correcta:1,
+   explicacion:"Al sumar constante a todos: promedio sube en 4 → 13. La desviación estándar mide dispersión relativa, que no cambia al sumar la misma constante → sigue siendo 3."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Récord mundial atletismo: 10.49 s. Récord olímpico: 10.50 s. ¿Puede un atleta romper el olímpico sin romper el mundial?",
+   opciones:["Sí, con un tiempo de 10.497 s que está entre los dos","Sí, con un tiempo menor a 10.4 s","No, no existe registro posible entre los dos","No, cualquier tiempo menor al olímpico es menor al mundial"],correcta:0,
+   explicacion:"10.497 s < 10.50 s (rompe récord olímpico) pero 10.497 s > 10.49 s (no rompe el mundial). Sí es posible porque hay valores reales entre 10.49 y 10.50."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Daniel construye una caja donde el largo = 2×ancho + 1 metro, y el perímetro = 29 metros. ¿Cuál es el ancho?",
+   opciones:["9 m","29 m","4.5 m","3.5 m"],correcta:2,
+   explicacion:"P = 2A + 2(2A+1) = 6A+2 = 29. Despejando: 6A = 27, A = 4.5 metros."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Una escalera de 12 m apoya sobre un muro. La base de la escalera está a 6 m del muro. ¿Cuál es el coseno del ángulo entre la escalera y el suelo?",
+   opciones:["0.5","0.86","0.7","0.4"],correcta:0,
+   explicacion:"cos(θ) = cateto adyacente / hipotenusa = 6/12 = 0.5. La base (6 m) es el cateto adyacente al ángulo y la escalera (12 m) es la hipotenusa."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"¿La fórmula correcta para encontrar las dimensiones de la caja de Daniel es?",
+   opciones:["2A + 2A = 29","2A + 1 = 29","2A + 2(A + 2) = 29","2A + 2(A+1) = 29"],correcta:3,
+   explicacion:"El perímetro de un rectángulo = 2×ancho + 2×largo. Como largo = 2A+1, la ecuación es: 2A + 2(2A+1) = 29, que simplifica a 2A + 2(A+1) en forma compacta."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Una población de simios en 2005 (año 3) tiene 3218 individuos, en 2007 (año 5) tiene 3628. El valor 2603 en la función lineal representa:",
+   opciones:["El incremento anual de la población","El número de individuos en el año 2002 (año 0)","El año en que dejará de crecer","El porcentaje de incremento anual"],correcta:1,
+   explicacion:"En la ecuación de la recta y = 205x + 2603, cuando x=0 (año 2002), y = 2603. El intercepto representa la población inicial en el año base del estudio."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Con la función de la población de simios y = 205x + 2603, ¿cuántos simios habrá luego de 20 años?",
+   opciones:["6500","2649","3542","6703"],correcta:3,
+   explicacion:"y = 205(20) + 2603 = 4100 + 2603 = 6703 individuos."},
+
+  {area:"mat",areaNombre:"Matemáticas",
+   contexto:null,
+   texto:"Carlos hace 25% más galletas que José (GJ). Se venden a $500 c/u y el 20% no se venden. ¿Qué expresión representa el total recaudado?",
+   opciones:["500(2GJ + 0.25GJ) × 0.8","500(2GJ – 0.2GJ)","500(2GJ – 0.25GJ) × 0.2","400(2GJ × 0.25GJ)"],correcta:0,
+   explicacion:"Total galletas = GJ + 1.25GJ = 2.25GJ = (2+0.25)GJ. Del total, el 80% se vende (1–0.20). Total recaudado = 500 × (2GJ + 0.25GJ) × 0.8."},
+
+  // COMPETENCIAS CIUDADANAS — 8 preguntas
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"Para analizar los conflictos étnicos entre Tutsis y Hutus en África, un estudiante procedería:",
+   opciones:["Examinaría las diferencias raciales y fisonómicas","Entrevistaría a líderes de potencias coloniales europeas","Indagaría la historia del colonialismo y la formación tribal en África","Comprendería el conflicto como inevitable en los humanos"],correcta:2,
+   explicacion:"El conflicto Tutsi-Hutu tiene raíces históricas en el colonialismo europeo que profundizó diferencias sociales. El análisis histórico-contextual es el método correcto en ciencias sociales."},
+
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"Pablo propone un Estado que controle toda la economía sacrificando la libertad. Luis propone un mercado transparente. Para formar mi opinión consideraría que:",
+   opciones:["La libertad es lo único importante sin importar la igualdad","La igualdad económica justifica sacrificar la libertad","La mejor solución es evadir el tema","Nunca habrá absolutos pero es vital conciliar libertad e igualdad"],correcta:3,
+   explicacion:"La posición democrática equilibrada reconoce que libertad e igualdad son valores que deben coexistir y complementarse, no excluirse mutuamente."},
+
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"En Colombia, la Corte Constitucional revisa las leyes del Congreso para determinar si:",
+   opciones:["La ley se ajusta al espíritu de la Constitución","La ley se ajusta al espíritu de la política","La ley es benéfica para los intereses nacionales","El Congreso valoró las consecuencias de su aplicación"],correcta:0,
+   explicacion:"La función principal de la Corte Constitucional es el control de constitucionalidad: verificar que las leyes sean coherentes con los principios de la Constitución Política de Colombia."},
+
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"Desde el enfoque neoliberal, el desempleo es responsabilidad de trabajadores y sindicatos porque:",
+   opciones:["Los salarios no son fijados por la oferta y demanda del mercado","Los salarios son muy altos y son privilegios de pocos","Los salarios los determinan unilateralmente los empresarios","El gobierno debe fijar el salario mínimo anualmente"],correcta:0,
+   explicacion:"El neoliberalismo defiende que el mercado libre debe fijar salarios. Los sindicatos crean 'rigideces' que impiden el libre juego de oferta y demanda laboral, lo que desde este modelo causa desempleo."},
+
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"La propuesta del Plan Nacional de México de 'eliminar trabas que impiden el funcionamiento adecuado de la economía' es afín a:",
+   opciones:["El socialismo, porque el Estado controla la economía","La monarquía, porque centraliza decisiones en el jefe de Estado","El neoliberalismo, porque restringe el rol del Estado al mercado","La democracia, porque invita a todos a tomar decisiones"],correcta:2,
+   explicacion:"Reducir regulaciones estatales y simplificar trámites para que el mercado funcione libremente es la esencia del modelo neoliberal."},
+
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"La amnistía se entiende como extinción de responsabilidad penal por delito político. Esta facultad es exclusiva del Estado porque:",
+   opciones:["Es el único titular facultado y legitimado para castigar o perdonar delitos","Una de las obligaciones del Estado es aplicar la justicia","Las sociedades prefieren resolver conflictos sin fuerza","Los Estados responden por los actos de sus ciudadanos"],correcta:0,
+   explicacion:"El Estado tiene el monopolio legítimo de la fuerza y la justicia (Weber). Por tanto, solo el Estado puede perdonar delitos mediante amnistía — es el único titular del ius puniendi."},
+
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"El Periodo Antiguo Régimen (previo a la Revolución Francesa) fue dominado por:",
+   opciones:["La aristocracia y la iglesia","La burguesía y los artesanos","El clero y la milicia","Artesanos y campesinos ricos"],correcta:0,
+   explicacion:"El Antiguo Régimen (monarquía absoluta de Luis XVI) era un sistema feudalista dominado por la nobleza (aristocracia) y la iglesia, los dos estamentos privilegiados que concentraban el poder y la tierra."},
+
+  {area:"cc",areaNombre:"Competencias Ciudadanas",
+   contexto:null,
+   texto:"Desastres como el de Armero (25.000 muertos por flujo de lodo) podrían evitarse desde los impactos sociales si:",
+   opciones:["El gobierno impidiera ubicación de población en zonas de amenaza","Las construcciones tuvieran normas sismorresistentes","La población no asumiera actitudes de arraigo material","Funcionaran adecuadamente los sistemas de alerta temprana"],correcta:3,
+   explicacion:"El desastre de Armero fue prevenible: existían alertas científicas sobre la erupción del Nevado del Ruiz. Los sistemas de alerta temprana que funcionen correctamente salvan vidas independientemente del arraigo o las construcciones."},
+
+  // CIENCIAS NATURALES — 7 preguntas
+  {area:"cn",areaNombre:"Ciencias Naturales",
+   contexto:null,
+   texto:"¿En qué consiste el proceso de fotosíntesis?",
+   opciones:["Producir energía para controlar la energía volcánica","Producir oxígeno suficiente para la atmósfera","Transformar la energía solar en energía química","Capturar energía solar para reducir los rayos ultravioleta"],correcta:2,
+   explicacion:"La fotosíntesis convierte energía lumínica en energía química (glucosa) usando CO₂ y H₂O. El O₂ es subproducto, no el objetivo. Es el proceso fundamental de los organismos autótrofos."},
+
+  {area:"cn",areaNombre:"Ciencias Naturales",
+   contexto:null,
+   texto:"Las enfermedades cardíacas como aterosclerosis e infarto se deben principalmente a:",
+   opciones:["Estrechamiento de arterias por colesterol que reduce oxígeno al corazón","Radiaciones solares que afectan el sistema nervioso","Insomnio por falta de empleo","Cambios en la estructura urbanística de la ciudad"],correcta:0,
+   explicacion:"El colesterol obstruye las arterias (aterosclerosis), reduce el flujo sanguíneo al corazón y provoca isquemia. Esta es la cadena causal directa de las enfermedades cardíacas mencionadas."},
+
+  {area:"cn",areaNombre:"Ciencias Naturales",
+   contexto:null,
+   texto:"Para combatir plagas del arroz que causan pérdidas del 40-50%, lo más efectivo y sostenible es:",
+   opciones:["Aplicación de fungicidas tóxicos sobre las semillas","Aplicación de herbicidas de amplio espectro como el glifosato","Creación de virus artificiales contra larvas de insectos","Ingeniería genética aumentando la resistencia de los cultivos"],correcta:3,
+   explicacion:"La ingeniería genética crea resistencia interna sin dañar el ecosistema. Los fungicidas son tóxicos, el glifosato esteriliza el suelo, y los virus artificiales pueden ser incontrolables."},
+
+  {area:"cn",areaNombre:"Ciencias Naturales",
+   contexto:null,
+   texto:"¿Cómo regula la temperatura corporal el ser humano y los animales de sangre caliente?",
+   opciones:["Por tasa de irradiación de calor y evaporación del agua (sudor y jadeo)","Buscando lugares frescos y oscuros durante el día","Tomando bebidas refrescantes","Aplicándose bloqueadores solares"],correcta:0,
+   explicacion:"La termorregulación en homeotermos ocurre principalmente por evaporación: el sudor al evaporarse enfría la piel, y el jadeo en animales cumple la misma función a través de las mucosas."},
+
+  {area:"cn",areaNombre:"Ciencias Naturales",
+   contexto:null,
+   texto:"En la diabetes juvenil el adolescente debe inyectarse insulina porque:",
+   opciones:["El hígado no emulsiona las grasas, aumentando el azúcar","El páncreas produce insulina en exceso","El páncreas no produce suficiente insulina","El hígado emulsiona las grasas evitando acumulación de azúcar"],correcta:2,
+   explicacion:"La diabetes tipo 1 (juvenil) ocurre porque el sistema inmune destruye las células beta del páncreas, que son las productoras de insulina. Sin insulina, la glucosa no puede entrar a las células."},
+
+  {area:"cn",areaNombre:"Ciencias Naturales",
+   contexto:null,
+   texto:"La estructura de las plantas que realiza la función equivalente a la circulación (llevar nutrientes a todas las células) es:",
+   opciones:["Las hojas","Los estomas","El xilema","El floema"],correcta:3,
+   explicacion:"El floema transporta la savia elaborada (nutrientes producidos en la fotosíntesis) desde las hojas hacia toda la planta en múltiples direcciones, equivalente a la circulación en animales."},
+
+  {area:"cn",areaNombre:"Ciencias Naturales",
+   contexto:null,
+   texto:"Si se modifica el equilibrio de un ecosistema eliminando la competencia y depredación entre especies, el resultado sería:",
+   opciones:["Mejoraría las cosechas con control de parásitos","Mejoraría las tasas de población y disponibilidad de recursos","Se desarrollaría más rápido la ciencia y técnica","Desequilibrios en ecosistemas, mutaciones y obstrucción de la evolución"],correcta:3,
+   explicacion:"La competencia y depredación son mecanismos naturales de regulación de poblaciones. Al eliminarlos artificialmente se rompe el equilibrio ecológico, afectando la biodiversidad y la evolución natural."},
+
+  // INGLÉS — 5 preguntas
+  {area:"ing",areaNombre:"Inglés",
+   contexto:`"It is time to get away! Let yourself be enchanted by landscapes where clear blue waters catch the light of green hills and red rocks. The province's resorts offer all this, and more."`,
+   texto:"According to the text, what will visitors experience at the province's resorts?",
+   opciones:["You will visit our province's resorts","You are going to hate our province's resorts","You can be terrified by the province's resorts","You will be amazed by the province's resorts"],correcta:3,
+   explicacion:"The text uses very positive words: 'enchanted', 'enjoy', 'relax'. All indicate visitors will be amazed and delighted — the opposite of terrified or disappointed."},
+
+  {area:"ing",areaNombre:"Inglés",
+   contexto:null,
+   texto:"Alfred had a job interview at IBM. His wife asked about his performance. He answered correctly:",
+   opciones:["The Director said I could start working next Monday.","The Director says I can starting work next Monday.","The Director said me I could start work next Monday.","The Director say me to start working next Monday."],correcta:0,
+   explicacion:"Reported speech in past: 'said' (past tense) + subject + 'could' (past modal) + verb. Structure: 'The Director said [that] I could start working...' is grammatically perfect."},
+
+  {area:"ing",areaNombre:"Inglés",
+   contexto:null,
+   texto:"One Hundred Years of Solitude by García Márquez is read worldwide because:",
+   opciones:["It have been translated into different languages.","It have been translated into different languages.","It has been translated into different languages.","It have been translate into different languages."],correcta:2,
+   explicacion:"Subject 'It' requires 'has' (third person singular). Passive voice present perfect: subject + has + been + past participle ('translated'). 'It has been translated' is correct."},
+
+  {area:"ing",areaNombre:"Inglés",
+   contexto:null,
+   texto:"Carol says: 'Yesterday the temperature was higher than today.' How does she say it correctly?",
+   opciones:["Yesterday was more hot than today.","Yesterday was as hotter as today.","Yesterday was much hot than today.","Yesterday was hotter than today."],correcta:3,
+   explicacion:"'Hot' is a short adjective (1 syllable), so comparatives use '-er': 'hotter'. Never use 'more' with short adjectives. 'More hot' and 'much hot' are incorrect."},
+
+  {area:"ing",areaNombre:"Inglés",
+   contexto:`George Frederick Handel: "he wasn't good at money management, he went broke. He was well-known, though, due to his vast cosmopolitan repertoire."`,
+   texto:"The expression 'he wasn't good at money management' means that:",
+   opciones:["Mr. Handel didn't have any financial ability","Mr. Handel was financially terrific","Mr. Handel was used to being in good financial condition","Mr. Handel didn't have many financial resources"],correcta:0,
+   explicacion:"'Not good at money management' literally means he had no skill for handling finances — no financial ability. This is confirmed by 'he went broke' (se arruinó)."}
+];
+
+// ══════════════════════════════════════
+// COLORES POR ÁREA
+// ══════════════════════════════════════
+const colores = {
+  lc:{color:'#e05820',bg:'#fff0ea',border:'#f0c0a0',nombre:'Lectura Crítica'},
+  mat:{color:'#1a6aaa',bg:'#e8f0fa',border:'#a0c0e8',nombre:'Matemáticas'},
+  cc:{color:'#1a8a50',bg:'#e8f8ee',border:'#a0d8b8',nombre:'Comp. Ciudadanas'},
+  cn:{color:'#8a1a8a',bg:'#f5e8f5',border:'#d0a0d0',nombre:'Ciencias Naturales'},
+  ing:{color:'#aa6a00',bg:'#fdf0d8',border:'#e0c080',nombre:'Inglés'}
+};
+
+// ══════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════
+let preguntaActual=0, respuestas={}, timerInterval, segundos=1200, ordenado=[];
+
+// ══════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════
+function verificarPassword(){
+  const val = document.getElementById('password-input').value.trim().toLowerCase();
+  const err = document.getElementById('login-error');
+  if(val === PASSWORD){
+    document.getElementById('screen-login').style.display='none';
+    const sn = document.getElementById('screen-nombre');
+    sn.style.display='flex';
+    setTimeout(()=>document.getElementById('nombre-input').focus(),100);
+  } else {
+    err.style.display='block';
+    document.getElementById('password-input').value='';
+  }
+}
+
+function comenzarConNombre(){
+  const n = document.getElementById('nombre-input').value.trim();
+  if(!n){ alert('Por favor escribe tu nombre'); return; }
+  nombreEstudiante = n;
+  document.getElementById('screen-nombre').style.display='none';
+  iniciarQuiz();
+}
+
+// ══════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════
+function iniciarQuiz(){
+  ordenado = [...preguntas].sort(()=>Math.random()-.5);
+  preguntaActual=0; respuestas={}; segundos=1200;
+  const sq=document.getElementById('screen-quiz');
+  sq.style.display='flex';
+  iniciarTimer(); mostrarPregunta();
+}
+
+function iniciarTimer(){
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    segundos--;
+    const m=Math.floor(segundos/60), s=segundos%60;
+    const el=document.getElementById('timer');
+    el.textContent=`${m}:${String(s).padStart(2,'0')}`;
+    el.className='timer'+(segundos<=60?' warning':'');
+    if(segundos<=0){clearInterval(timerInterval);mostrarResultados();}
+  },1000);
+}
+
+function mostrarPregunta(){
+  const p=ordenado[preguntaActual], total=ordenado.length;
+  const pct=Math.round((preguntaActual/total)*100);
+  const col=colores[p.area];
+
+  const tag=document.getElementById('area-tag');
+  tag.textContent=p.areaNombre;
+  tag.style.cssText=`background:${col.bg};color:${col.color};border:1px solid ${col.border};font-family:'Syne',sans-serif;font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:1px;`;
+
+  document.getElementById('prog-texto').textContent=`Pregunta ${preguntaActual+1} de ${total}`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('q-number').textContent=`PREGUNTA ${preguntaActual+1} — ${p.areaNombre.toUpperCase()}`;
+
+  const ctx=document.getElementById('context-block');
+  if(p.contexto){ctx.style.display='block';ctx.textContent=p.contexto;ctx.style.borderLeftColor=col.color;}
+  else ctx.style.display='none';
+
+  document.getElementById('q-text').textContent=p.texto;
+
+  const cont=document.getElementById('options-container');
+  cont.innerHTML='';
+  ['A','B','C','D'].forEach((l,i)=>{
+    const btn=document.createElement('button');
+    btn.className='option';
+    btn.innerHTML=`<span class="option-letter">${l}</span><span>${p.opciones[i]}</span>`;
+    btn.onclick=()=>seleccionar(i);
+    cont.appendChild(btn);
+  });
+
+  document.getElementById('feedback-box').style.display='none';
+  document.getElementById('feedback-box').className='feedback-box';
+  document.getElementById('btn-next').style.display='none';
+  document.querySelector('.btn-skip').style.display='block';
+}
+
+function seleccionar(idx){
+  const p=ordenado[preguntaActual];
+  if(document.getElementById('feedback-box').style.display!=='none') return;
+  const opts=document.querySelectorAll('.option');
+  opts.forEach(o=>o.classList.remove('selected'));
+  opts[idx].classList.add('selected');
+  const ok=idx===p.correcta;
+  respuestas[preguntaActual]={correcta:ok,area:p.area};
+  setTimeout(()=>{
+    opts[p.correcta].classList.add('correct');
+    if(!ok) opts[idx].classList.add('wrong');
+    const fb=document.getElementById('feedback-box');
+    fb.style.display='block';
+    fb.className='feedback-box '+(ok?'correct':'wrong');
+    document.getElementById('fb-title').textContent=ok?'✅ ¡Correcto!':'❌ Incorrecto';
+    document.getElementById('fb-texto').textContent=p.explicacion;
+    document.getElementById('btn-next').style.display='block';
+    document.querySelector('.btn-skip').style.display='none';
+  },200);
+}
+
+function siguientePregunta(){
+  preguntaActual++;
+  if(preguntaActual>=ordenado.length){clearInterval(timerInterval);mostrarResultados();}
+  else mostrarPregunta();
+}
+
+function saltarPregunta(){
+  respuestas[preguntaActual]={correcta:false,area:ordenado[preguntaActual].area};
+  preguntaActual++;
+  if(preguntaActual>=ordenado.length){clearInterval(timerInterval);mostrarResultados();}
+  else mostrarPregunta();
+}
+
+// ══════════════════════════════════════
+// RESULTADOS
+// ══════════════════════════════════════
+function mostrarResultados(){
+  document.getElementById('screen-quiz').style.display='none';
+  document.getElementById('screen-results').style.display='block';
+
+  const total=ordenado.length;
+  const correctas=Object.values(respuestas).filter(r=>r.correcta).length;
+  const pct=Math.round((correctas/total)*100);
+
+  document.getElementById('student-name-result').textContent=`📋 Diagnóstico de ${nombreEstudiante}`;
+  document.getElementById('score-num').textContent=correctas;
+  document.getElementById('score-den').textContent=`de ${total}`;
+
+  const circle=document.getElementById('score-circle');
+  const numEl=document.getElementById('score-num');
+  if(pct>=70){circle.style.borderColor='#1a8a50';numEl.style.color='#1a8a50';}
+  else if(pct>=50){circle.style.borderColor='#aa6a00';numEl.style.color='#aa6a00';}
+  else{circle.style.borderColor='#cc2020';numEl.style.color='#cc2020';}
+
+  document.getElementById('result-titulo').textContent=
+    pct>=70?'¡Excelente preparación!':pct>=50?'Buen avance, hay áreas a reforzar':'Necesitas preparación enfocada';
+  document.getElementById('result-sub').textContent=`${pct}% correcto · ${correctas} de ${total} preguntas · Diagnóstico completo por área`;
+
+  // Por área
+  const areas={
+    lc:{n:'Lectura Crítica',t:0,c:0,temas:[]},
+    mat:{n:'Matemáticas',t:0,c:0,temas:[]},
+    cc:{n:'Comp. Ciudadanas',t:0,c:0,temas:[]},
+    cn:{n:'Ciencias Naturales',t:0,c:0,temas:[]},
+    ing:{n:'Inglés',t:0,c:0,temas:[]}
+  };
+
+  const consejos={
+    lc:'Practica con los textos de los cuadernillos. Enfócate en identificar la intención del autor y los recursos literarios.',
+    mat:'Repasa los temas de trigonometría, estadística y álgebra de los cuadernillos. Trabaja los ejercicios paso a paso.',
+    cc:'Estudia la Constitución colombiana, geografía e historia con los temarios. Relaciona conceptos con la actualidad.',
+    cn:'Refuerza biología celular, física y química con los videos de clase incluidos en el Pack.',
+    ing:'Practica gramática y vocabulario. Usa los cuadernillos de inglés y lee en voz alta para mejorar comprensión.'
+  };
+
+  ordenado.forEach((p,i)=>{
+    areas[p.area].t++;
+    if(respuestas[i]&&respuestas[i].correcta) areas[p.area].c++;
+  });
+
+  const areasHtml=Object.entries(areas).map(([k,a])=>{
+    if(a.t===0) return '';
+    const ap=Math.round((a.c/a.t)*100);
+    const col=colores[k];
+    const nivel=ap>=70?'✅ Nivel bueno — sigue practicando':ap>=50?'⚠️ Nivel medio — necesita refuerzo':'🔴 Prioridad alta — dedica más tiempo';
+    return `<div class="area-result">
+      <div class="area-result-top">
+        <div class="area-result-name" style="color:${col.color}">${a.n}</div>
+        <div class="area-result-score">${a.c}/${a.t}</div>
+      </div>
+      <div class="area-bar"><div class="area-bar-fill" style="width:${ap}%;background:${col.color}"></div></div>
+      <div class="area-detail">${nivel}<br><em>${consejos[k]}</em></div>
+    </div>`;
+  }).join('');
+  document.getElementById('areas-results').innerHTML=areasHtml;
+
+  // Recomendaciones
+  const debiles=Object.entries(areas).filter(([k,a])=>a.t>0&&(a.c/a.t)<0.6).map(([k,a])=>({k,n:a.n}));
+  const recsHtml=debiles.length>0
+    ? debiles.map(d=>`<div class="rec-item"><span>📌</span><span><strong>${d.n}:</strong> ${consejos[d.k]}</span></div>`).join('')
+    : '<div class="rec-item"><span>🎯</span><span>¡Tienes una base muy sólida! Sigue practicando con los simulacros de exámenes reales 2019–2021 del Pack para afinar tu puntaje.</span></div>';
+
+  document.getElementById('recomendaciones').innerHTML=`
+    <h3>📋 Tu plan de acción personalizado</h3>
+    ${recsHtml}
+    <div class="rec-item"><span>📅</span><span>Usa el <strong>Plan de Estudio PDF</strong> del Pack para organizar estas áreas semana a semana según tu fecha de examen.</span></div>
+    <div class="rec-item"><span>🧘</span><span>Si sientes ansiedad, revisa el <strong>Taller de Manejo del Estrés</strong> incluido en tu Pack antes del examen.</span></div>`;
+}
+
+// ══════════════════════════════════════
+// GENERAR PDF
+// ══════════════════════════════════════
+function descargarPDF(){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF();
+  const fecha=new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
+  const total=ordenado.length;
+  const correctas=Object.values(respuestas).filter(r=>r.correcta).length;
+  const pct=Math.round((correctas/total)*100);
+
+  // Fondo header
+  doc.setFillColor(10,22,40);
+  doc.rect(0,0,210,50,'F');
+
+  doc.setTextColor(245,192,0);
+  doc.setFontSize(20);
+  doc.setFont('helvetica','bold');
+  doc.text('DIAGNÓSTICO PREMIUM ICFES 2026',105,20,{align:'center'});
+
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(12);
+  doc.setFont('helvetica','normal');
+  doc.text('Grupo Académico ICFES · Saber 11',105,30,{align:'center'});
+  doc.text(`Fecha: ${fecha}`,105,40,{align:'center'});
+
+  // Datos del estudiante
+  doc.setTextColor(10,22,40);
+  doc.setFontSize(16);
+  doc.setFont('helvetica','bold');
+  doc.text(`Estudiante: ${nombreEstudiante}`,20,65);
+
+  doc.setFontSize(13);
+  doc.setFont('helvetica','normal');
+  doc.text(`Resultado general: ${correctas} de ${total} preguntas correctas (${pct}%)`,20,78);
+
+  const nivel=pct>=70?'NIVEL AVANZADO — Excelente preparación':pct>=50?'NIVEL INTERMEDIO — Hay áreas a reforzar':'NIVEL BÁSICO — Se requiere preparación enfocada';
+  doc.setFont('helvetica','bold');
+  doc.text(nivel,20,91);
+
+  // Línea separadora
+  doc.setDrawColor(200,200,200);
+  doc.line(20,98,190,98);
+
+  // Resultados por área
+  doc.setFontSize(14);
+  doc.setFont('helvetica','bold');
+  doc.setTextColor(10,22,40);
+  doc.text('RESULTADOS POR ÁREA',20,110);
+
+  const areas={
+    lc:{n:'Lectura Crítica',t:0,c:0},
+    mat:{n:'Matemáticas',t:0,c:0},
+    cc:{n:'Comp. Ciudadanas',t:0,c:0},
+    cn:{n:'Ciencias Naturales',t:0,c:0},
+    ing:{n:'Inglés',t:0,c:0}
+  };
+  ordenado.forEach((p,i)=>{
+    areas[p.area].t++;
+    if(respuestas[i]&&respuestas[i].correcta) areas[p.area].c++;
+  });
+
+  let y=122;
+  Object.entries(areas).forEach(([k,a])=>{
+    if(a.t===0) return;
+    const ap=Math.round((a.c/a.t)*100);
+    const icono=ap>=70?'✓ BIEN':ap>=50?'! MEDIO':'✗ REFORZAR';
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.setTextColor(10,22,40);
+    doc.text(`${a.n}:`,20,y);
+
+    doc.setFont('helvetica','normal');
+    doc.text(`${a.c}/${a.t} (${ap}%)  →  ${icono}`,90,y);
+
+    // barra visual
+    doc.setFillColor(220,220,220);
+    doc.rect(20,y+2,80,4,'F');
+    const barColor=ap>=70?[26,138,80]:ap>=50?[170,106,0]:[204,32,32];
+    doc.setFillColor(...barColor);
+    doc.rect(20,y+2,80*(ap/100),4,'F');
+
+    y+=16;
+  });
+
+  // Plan de acción
+  y+=8;
+  doc.setFillColor(10,22,40);
+  doc.rect(0,y-6,210,10,'F');
+  doc.setTextColor(245,192,0);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(13);
+  doc.text('PLAN DE ACCIÓN RECOMENDADO',105,y+1,{align:'center'});
+  y+=14;
+
+  const consejos={
+    lc:'Lectura Crítica: Practica con los textos de los cuadernillos. Identifica intención del autor.',
+    mat:'Matemáticas: Trabaja trigonometría, estadística y álgebra de los cuadernillos paso a paso.',
+    cc:'Comp. Ciudadanas: Estudia la Constitución colombiana con los temarios del Pack.',
+    cn:'Ciencias Naturales: Refuerza biología y química con los videos de clase del Pack.',
+    ing:'Inglés: Practica gramática y vocabulario con los cuadernillos de inglés.'
+  };
+
+  doc.setTextColor(10,22,40);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(11);
+
+  const debiles=Object.entries(areas).filter(([k,a])=>a.t>0&&(a.c/a.t)<0.7);
+  if(debiles.length===0){
+    doc.text('¡Excelente nivel! Practica con los simulacros de exámenes reales 2019, 2020 y 2021',20,y);
+    doc.text('incluidos en tu Pack para afinar tu puntaje final.',20,y+8);
+  } else {
+    debiles.forEach(([k])=>{
+      const lines=doc.splitTextToSize(consejos[k],170);
+      doc.text(lines,20,y);
+      y+=lines.length*7+4;
+    });
+  }
+
+  y+=10;
+  doc.setFontSize(10);
+  doc.setTextColor(100,100,100);
+  doc.text('• Usa el Plan de Estudio PDF del Pack para organizar estas áreas semana a semana.',20,y);
+  doc.text('• Revisa el Taller de Manejo del Estrés antes del examen si sientes ansiedad.',20,y+8);
+
+  // Footer
+  doc.setFillColor(10,22,40);
+  doc.rect(0,277,210,20,'F');
+  doc.setTextColor(200,200,200);
+  doc.setFontSize(9);
+  doc.text('Grupo Académico ICFES · +57 317 835 9725 · Pack ICFES 2026',105,287,{align:'center'});
+
+  doc.save(`Diagnostico_ICFES_${nombreEstudiante.replace(/\s+/g,'_')}.pdf`);
+}
+
+function reiniciar(){
+  document.getElementById('screen-results').style.display='none';
+  document.getElementById('screen-login').style.display='flex';
+  document.getElementById('password-input').value='';
+}
+</script>
+</body>
+</html>
