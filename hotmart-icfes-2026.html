@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#080c14">
+<title>Mega Pack ICFES 2026 — Prepárate y Sube tu Puntaje</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#080c14;
+  --navy:#0a1628;
+  --blue:#0f2050;
+  --gold:#f5c000;
+  --gold2:#ffdd44;
+  --red:#e02020;
+  --green:#18c464;
+  --white:#fff;
+  --muted:#6070a0;
+  --border:rgba(255,255,255,.07);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;}
+
+/* ══ URGENCIA ══ */
+.urgencia{
+  background:var(--red);
+  text-align:center;padding:10px 16px;
+  font-size:12px;font-weight:700;letter-spacing:.5px;
+  position:sticky;top:0;z-index:100;
+}
+.urgencia span{color:#fff700;}
+.urgencia b{color:#fff;}
+
+/* ══ HERO ══ */
+.hero{
+  padding:48px 20px 40px;
+  text-align:center;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245,192,0,.08) 0%, transparent 70%),
+    linear-gradient(180deg,#0a1628 0%,#080c14 100%);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,192,0,.1);border:1px solid rgba(245,192,0,.3);
+  color:var(--gold);font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:6px 16px;border-radius:100px;margin-bottom:24px;
+}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,13vw,80px);
+  line-height:.92;letter-spacing:1px;
+  margin-bottom:20px;
+}
+.hero h1 .line2{color:var(--gold);}
+.hero h1 .line3{
+  -webkit-text-stroke:1px rgba(255,255,255,.3);
+  color:transparent;
+  display:block;
+}
+.hero-pain{
+  font-size:16px;font-weight:600;
+  color:rgba(255,255,255,.7);
+  line-height:1.6;max-width:340px;
+  margin:0 auto 32px;
+}
+.hero-pain strong{color:var(--white);}
+
+/* SCORE VISUAL */
+.score-visual{
+  display:flex;justify-content:center;gap:0;
+  margin-bottom:32px;
+  max-width:360px;margin-left:auto;margin-right:auto;
+}
+.score-block{
+  flex:1;padding:16px 8px;text-align:center;
+  position:relative;
+}
+.score-block:first-child{
+  background:rgba(224,32,32,.1);
+  border:1px solid rgba(224,32,32,.2);
+  border-radius:12px 0 0 12px;
+}
+.score-block:last-child{
+  background:rgba(24,196,100,.1);
+  border:1px solid rgba(24,196,100,.2);
+  border-radius:0 12px 12px 0;
+}
+.score-arrow{
+  width:40px;display:flex;align-items:center;
+  justify-content:center;
+  font-size:20px;color:var(--gold);
+  background:rgba(245,192,0,.05);
+  border-top:1px solid rgba(245,192,0,.1);
+  border-bottom:1px solid rgba(245,192,0,.1);
+}
+.score-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:42px;line-height:1;
+}
+.score-block:first-child .score-num{color:#ff6060;}
+.score-block:last-child .score-num{color:var(--green);}
+.score-label{font-size:11px;font-weight:600;margin-top:4px;opacity:.7;}
+
+/* ══ DOLOR ══ */
+.dolor{padding:40px 20px;background:var(--navy);}
+.dolor h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(32px,9vw,48px);
+  text-align:center;margin-bottom:6px;
+  color:var(--white);
+}
+.dolor-sub{
+  text-align:center;font-size:14px;
+  color:var(--muted);margin-bottom:24px;
+}
+.dolor-items{display:flex;flex-direction:column;gap:10px;}
+.dolor-item{
+  display:flex;gap:12px;align-items:flex-start;
+  background:rgba(224,32,32,.06);
+  border:1px solid rgba(224,32,32,.15);
+  border-radius:10px;padding:14px;
+  font-size:14px;line-height:1.5;
+}
+.dolor-item .d-icon{font-size:20px;flex-shrink:0;}
+.dolor-item strong{display:block;color:var(--white);margin-bottom:2px;}
+.dolor-item span{color:#8090a8;font-size:13px;}
+
+/* ══ DIAGNOSTICO ══ */
+#s-diag{background:var(--bg);}
+.diag-intro{
+  padding:40px 20px 24px;
+  text-align:center;
+}
+.diag-intro h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(30px,8vw,46px);
+  margin-bottom:10px;
+}
+.diag-intro h2 em{color:var(--gold);font-style:normal;}
+.diag-intro p{font-size:14px;color:var(--muted);line-height:1.6;max-width:320px;margin:0 auto 24px;}
+.diag-start-btn{
+  display:block;width:100%;max-width:360px;margin:0 auto;
+  background:linear-gradient(135deg,var(--gold),#ffaa00);
+  color:var(--navy);font-size:16px;font-weight:800;
+  padding:17px;border-radius:12px;border:none;
+  cursor:pointer;font-family:'Barlow',sans-serif;
+  box-shadow:0 8px 32px rgba(245,192,0,.25);
+}
+
+/* QUIZ inline */
+#quiz-wrap{display:none;padding:0 20px 24px;}
+.quiz-prog-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-bottom:20px;overflow:hidden;}
+.quiz-prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s;}
+.quiz-area-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.quiz-q{font-size:15px;font-weight:600;line-height:1.55;margin-bottom:18px;color:var(--white);}
+.quiz-ctx{background:rgba(255,255,255,.03);border-left:3px solid var(--gold);padding:10px 12px;font-size:12px;color:#8090a8;line-height:1.6;margin-bottom:14px;border-radius:0 6px 6px 0;max-height:100px;overflow-y:auto;}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;}
+.quiz-opt{
+  display:flex;gap:10px;align-items:flex-start;
+  background:rgba(255,255,255,.04);border:1.5px solid var(--border);
+  border-radius:10px;padding:12px;cursor:pointer;
+  text-align:left;font-size:13px;line-height:1.4;
+  color:var(--white);font-family:'Barlow',sans-serif;width:100%;
+  transition:border-color .15s;
+}
+.quiz-opt.correct{border-color:var(--green);background:rgba(24,196,100,.08);}
+.quiz-opt.wrong{border-color:var(--red);background:rgba(224,32,32,.08);}
+.quiz-opt-l{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.08);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.quiz-opt.correct .quiz-opt-l{background:var(--green);}
+.quiz-opt.wrong .quiz-opt-l{background:var(--red);}
+.quiz-fb{margin-top:12px;padding:12px;border-radius:8px;font-size:12px;line-height:1.5;display:none;}
+.quiz-fb.ok{background:rgba(24,196,100,.08);border:1px solid rgba(24,196,100,.2);color:#80e890;}
+.quiz-fb.fail{background:rgba(224,32,32,.08);border:1px solid rgba(224,32,32,.2);color:#f08080;}
+.quiz-next{background:var(--gold);color:var(--navy);font-size:14px;font-weight:800;padding:12px 28px;border-radius:10px;border:none;cursor:pointer;display:none;margin-top:14px;float:right;font-family:'Barlow',sans-serif;}
+
+/* RESULTADO inline */
+#result-wrap{display:none;padding:0 20px 24px;}
+.result-score-big{text-align:center;margin-bottom:20px;}
+.result-score-big .rs-icon{font-size:44px;margin-bottom:8px;}
+.result-score-big h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,8vw,40px);margin-bottom:4px;}
+.result-score-big p{font-size:13px;color:var(--muted);}
+.result-score-big p strong{color:var(--white);}
+.r-area{border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid;}
+.r-area.debil{background:rgba(224,32,32,.08);border-color:rgba(224,32,32,.25);}
+.r-area.fuerte{background:rgba(24,196,100,.06);border-color:rgba(24,196,100,.15);}
+.r-area-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.r-area-name{font-size:13px;font-weight:700;}
+.r-area.debil .r-area-name{color:#ff7070;}
+.r-area.fuerte .r-area-name{color:#60e890;}
+.r-area-pct{font-size:11px;font-weight:800;padding:2px 8px;border-radius:4px;}
+.r-area.debil .r-area-pct{background:rgba(224,32,32,.2);color:#ff7070;}
+.r-area.fuerte .r-area-pct{background:rgba(24,196,100,.2);color:#60e890;}
+.r-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.r-bar-fill{height:100%;border-radius:2px;}
+.r-area.debil .r-bar-fill{background:var(--red);}
+.r-area.fuerte .r-bar-fill{background:var(--green);}
+.r-msg{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4;}
+
+/* OFERTA PUENTE */
+.oferta-puente{
+  margin:16px 0 0;
+  background:linear-gradient(135deg,rgba(245,192,0,.1),rgba(245,192,0,.03));
+  border:1.5px solid rgba(245,192,0,.4);
+  border-radius:14px;padding:20px 16px;
+  text-align:center;
+}
+.op-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,6vw,32px);color:var(--gold);margin-bottom:6px;}
+.op-sub{font-size:13px;color:#b09060;line-height:1.5;margin-bottom:16px;}
+.op-arrow{font-size:28px;margin-bottom:8px;display:block;animation:bounce .8s infinite alternate;}
+@keyframes bounce{from{transform:translateY(0);}to{transform:translateY(6px);}}
+
+/* ══ TRANSFORMACION ══ */
+.transf{padding:40px 20px;background:var(--navy);text-align:center;}
+.transf h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,8vw,46px);margin-bottom:6px;}
+.transf h2 em{color:var(--gold);font-style:normal;}
+.transf-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.5;}
+.transf-items{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.transf-item{
+  display:flex;gap:12px;align-items:flex-start;
+  background:rgba(24,196,100,.06);
+  border:1px solid rgba(24,196,100,.15);
+  border-radius:10px;padding:14px;
+  font-size:14px;line-height:1.5;text-align:left;
+}
+.transf-item .t-icon{font-size:20px;flex-shrink:0;}
+.transf-item strong{display:block;color:var(--green);margin-bottom:2px;}
+.transf-item span{color:#7090a0;font-size:13px;}
+
+/* ══ PACK INCLUYE ══ */
+.pack-sec{padding:40px 20px;background:var(--bg);}
+.pack-sec h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,8vw,46px);text-align:center;margin-bottom:6px;}
+.pack-sub{text-align:center;font-size:14px;color:var(--muted);margin-bottom:24px;}
+.pack-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.pack-item{
+  display:flex;gap:12px;align-items:center;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;
+  font-size:14px;font-weight:600;
+}
+.pack-item .pi{font-size:18px;flex-shrink:0;width:26px;text-align:center;}
+
+/* BONOS */
+.bonos-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.bono-card{
+  background:linear-gradient(135deg,#120800,#1e0f00);
+  border:2px solid var(--gold);
+  border-radius:14px;padding:18px 16px;
+}
+.bono-tag{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block;}
+.bono-title{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--white);line-height:1;margin-bottom:6px;}
+.bono-desc{font-size:13px;color:#b09060;line-height:1.5;}
+
+/* ══ PRECIO / CTA ══ */
+.cta-sec{
+  padding:40px 20px;
+  background:linear-gradient(180deg,var(--navy),var(--bg));
+  text-align:center;
+}
+.cta-sec h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,8vw,44px);margin-bottom:6px;}
+.cta-sub-text{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+
+.precio-wrap{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(245,192,0,.2);
+  border-radius:16px;padding:24px 20px;
+  margin-bottom:20px;position:relative;
+}
+.precio-badge{
+  position:absolute;top:-12px;right:16px;
+  background:var(--red);color:#fff;
+  font-size:11px;font-weight:800;
+  padding:3px 12px;border-radius:100px;letter-spacing:.5px;
+}
+.p-old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-bottom:6px;}
+.p-new{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(58px,16vw,80px);
+  color:var(--gold);line-height:1;letter-spacing:1px;
+}
+.p-new sup{font-size:24px;vertical-align:super;}
+.p-tag{font-size:12px;color:var(--green);font-weight:700;margin-top:6px;}
+
+.garantia{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;
+  font-size:13px;color:#8090a8;
+  margin-bottom:20px;text-align:left;
+}
+
+.timer-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;margin-bottom:20px;
+  font-size:12px;color:var(--red);font-weight:700;
+}
+.t-box{
+  background:rgba(224,32,32,.12);border:1px solid rgba(224,32,32,.25);
+  border-radius:8px;padding:6px 10px;min-width:44px;text-align:center;
+}
+.t-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#ff5050;line-height:1;display:block;}
+.t-unit{font-size:8px;color:#cc6060;letter-spacing:.5px;}
+
+.btn-hotmart{
+  display:block;width:100%;
+  background:linear-gradient(135deg,#25d366,#1aad54);
+  color:#fff;font-size:18px;font-weight:800;
+  text-decoration:none;text-align:center;
+  padding:20px;border-radius:14px;
+  box-shadow:0 8px 40px rgba(37,211,102,.3);
+  letter-spacing:.3px;
+  animation:glow 2s infinite;
+  font-family:'Barlow',sans-serif;
+  margin-bottom:10px;
+}
+@keyframes glow{
+  0%,100%{box-shadow:0 8px 40px rgba(37,211,102,.3);}
+  50%{box-shadow:0 8px 56px rgba(37,211,102,.55);}
+}
+.btn-hotmart:active{transform:scale(.98);}
+.btn-sub{font-size:11px;color:var(--muted);text-align:center;}
+
+/* TESTIMONIOS */
+.testimonios{padding:40px 20px;background:var(--navy);}
+.testimonios h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,8vw,42px);text-align:center;margin-bottom:20px;}
+.test-grid{display:flex;flex-direction:column;gap:12px;}
+.test-card{
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  border-radius:12px;padding:16px;
+}
+.test-stars{color:var(--gold);font-size:14px;margin-bottom:8px;}
+.test-text{font-size:13px;color:#90a0b8;line-height:1.6;margin-bottom:10px;font-style:italic;}
+.test-author{font-size:12px;font-weight:700;color:var(--white);}
+.test-city{font-size:11px;color:var(--muted);}
+
+/* GARANTIA SEC */
+.garantia-sec{
+  padding:32px 20px;background:var(--bg);text-align:center;
+}
+.garantia-sec .g-icon{font-size:48px;margin-bottom:12px;}
+.garantia-sec h3{font-family:'Bebas Neue',sans-serif;font-size:28px;margin-bottom:8px;}
+.garantia-sec p{font-size:13px;color:var(--muted);line-height:1.6;max-width:320px;margin:0 auto;}
+
+/* STICKY CTA BOTTOM */
+.sticky-cta{
+  position:fixed;bottom:0;left:0;right:0;
+  background:linear-gradient(0deg,var(--bg) 60%,transparent);
+  padding:16px 20px 20px;z-index:50;
+  display:none;
+}
+.sticky-cta.visible{display:block;}
+.btn-sticky{
+  display:block;width:100%;
+  background:linear-gradient(135deg,var(--gold),#ffaa00);
+  color:var(--navy);font-size:16px;font-weight:800;
+  text-decoration:none;text-align:center;
+  padding:16px;border-radius:12px;
+  font-family:'Barlow',sans-serif;
+  box-shadow:0 4px 24px rgba(245,192,0,.3);
+}
+
+/* ANIMACIONES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .5s ease both;}
+.d1{animation-delay:.1s;}.d2{animation-delay:.2s;}.d3{animation-delay:.3s;}
+</style>
+</head>
+<body>
+
+<!-- URGENCIA -->
+<div class="urgencia">
+  ⏰ Oferta especial — Solo por tiempo limitado · Precio vuelve a <span>$187.000</span> · <b>Aprovecha ahora</b>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-badge">🎯 Mega Pack ICFES 2026</div>
+  <h1 class="fu">
+    ¿Listo para<br>
+    <span class="line2">subir tu</span><br>
+    <span class="line3">puntaje?</span>
+  </h1>
+  <p class="hero-pain fu d1">
+    Cada año miles de estudiantes llegan al ICFES <strong>sin saber en qué áreas fallan.</strong>
+    Tú no tienes que ser uno de ellos.
+  </p>
+  <div class="score-visual fu d2">
+    <div class="score-block">
+      <div class="score-num">200</div>
+      <div class="score-label">Sin preparación</div>
+    </div>
+    <div class="score-arrow">→</div>
+    <div class="score-block">
+      <div class="score-num">500</div>
+      <div class="score-label">Con el Pack</div>
+    </div>
+  </div>
+  <a href="#cta" class="diag-start-btn fu d3" style="max-width:360px;display:block;margin:0 auto;text-decoration:none;">
+    Ver el Pack ICFES 2026 →
+  </a>
+</section>
+
+<!-- ══ DOLOR ══ -->
+<section class="dolor fu">
+  <h2>¿Te identificas<br>con esto?</h2>
+  <p class="dolor-sub">Si sientes alguno de estos dolores, este Pack es para ti</p>
+  <div class="dolor-items">
+    <div class="dolor-item">
+      <div class="d-icon">😰</div>
+      <div>
+        <strong>No sabes por dónde empezar a estudiar</strong>
+        <span>Abres el temario y no sabes qué priorizar. Estudias todo y retienes poco.</span>
+      </div>
+    </div>
+    <div class="dolor-item">
+      <div class="d-icon">📉</div>
+      <div>
+        <strong>Tus simulacros no mejoran</strong>
+        <span>Estudias horas pero en los simulacros sigues cometiendo los mismos errores.</span>
+      </div>
+    </div>
+    <div class="dolor-item">
+      <div class="d-icon">⏰</div>
+      <div>
+        <strong>El tiempo se acaba y el pánico aumenta</strong>
+        <span>Sientes que el examen se acerca y que no vas a estar listo/a a tiempo.</span>
+      </div>
+    </div>
+    <div class="dolor-item">
+      <div class="d-icon">🎯</div>
+      <div>
+        <strong>Tienes metas altas pero no el método</strong>
+        <span>Quieres entrar a tu carrera soñada pero necesitas un puntaje que hoy parece lejano.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DIAGNÓSTICO GRATIS ══ -->
+<section id="s-diag">
+  <div class="diag-intro">
+    <h2>Primero, descubre<br><em>dónde estás fallando</em></h2>
+    <p>Haz este diagnóstico GRATIS — 10 preguntas reales del ICFES — y en 5 minutos sabes exactamente qué áreas necesitas reforzar.</p>
+    <button class="diag-start-btn" onclick="startDiag()">🔍 Hacer diagnóstico GRATIS →</button>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">Sin registro · Sin pago · Resultado inmediato</p>
+  </div>
+
+  <div id="quiz-wrap">
+    <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:0%"></div></div>
+    <div class="quiz-area-label" id="qarea"></div>
+    <div class="quiz-ctx" id="qctx" style="display:none"></div>
+    <div class="quiz-q" id="qq"></div>
+    <div class="quiz-opts" id="qopts"></div>
+    <div class="quiz-fb" id="qfb"><b id="qfbt"></b> <span id="qfbx"></span></div>
+    <button class="quiz-next" id="qnext" onclick="nextQ()">Siguiente →</button>
+    <div style="clear:both"></div>
+  </div>
+
+  <div id="result-wrap">
+    <div class="result-score-big">
+      <div class="rs-icon" id="ricon">🧠</div>
+      <h3 id="rtitle">Tu diagnóstico</h3>
+      <p id="rscore"></p>
+    </div>
+    <div id="rareas"></div>
+    <div class="oferta-puente">
+      <span class="op-arrow">👇</span>
+      <div class="op-title">YA SABES TUS FALLAS.<br>AHORA CORRÍGELAS.</div>
+      <p class="op-sub">El Mega Pack ICFES 2026 tiene exactamente lo que necesitas para reforzar cada área débil antes del examen.</p>
+      <a href="#cta" style="display:block;background:linear-gradient(135deg,var(--gold),#ffaa00);color:var(--navy);font-size:16px;font-weight:800;padding:16px;border-radius:12px;text-decoration:none;font-family:'Barlow',sans-serif;">
+        Ver el Pack y adquirirlo →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRANSFORMACION ══ -->
+<section class="transf">
+  <h2>Con el Mega Pack<br><em>todo cambia</em></h2>
+  <p class="transf-sub">No es suerte. Es preparación inteligente con el método correcto.</p>
+  <div class="transf-items">
+    <div class="transf-item">
+      <div class="t-icon">🎯</div>
+      <div>
+        <strong>Sabes exactamente qué estudiar</strong>
+        <span>El diagnóstico y la metodología te dicen por dónde empezar y qué priorizar cada semana.</span>
+      </div>
+    </div>
+    <div class="transf-item">
+      <div class="t-icon">📈</div>
+      <div>
+        <strong>Tus simulacros mejoran semana a semana</strong>
+        <span>Con exámenes reales filtrados practicas lo que de verdad sale en el ICFES.</span>
+      </div>
+    </div>
+    <div class="transf-item">
+      <div class="t-icon">🧠</div>
+      <div>
+        <strong>Llegas tranquilo/a el día del examen</strong>
+        <span>El taller de manejo del estrés y los consejos estratégicos te preparan también mentalmente.</span>
+      </div>
+    </div>
+    <div class="transf-item">
+      <div class="t-icon">🏆</div>
+      <div>
+        <strong>Tu carrera soñada está más cerca</strong>
+        <span>Más de 500 estudiantes ya usaron este Pack y mejoraron su puntaje significativamente.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LO QUE INCLUYE ══ -->
+<section class="pack-sec">
+  <h2>Todo lo que incluye</h2>
+  <p class="pack-sub">Un solo Pack. Todo lo que necesitas para el Saber 11.</p>
+  <div class="pack-grid">
+    <div class="pack-item"><div class="pi">📌</div><div>Guía inicial + Metodología paso a paso</div></div>
+    <div class="pack-item"><div class="pi">📖</div><div>Material completo por las 5 áreas del examen</div></div>
+    <div class="pack-item"><div class="pi">✅</div><div>Simulacros generales y premium tipo ICFES</div></div>
+    <div class="pack-item"><div class="pi">🔍</div><div>ICFES Filtradas 2026 — preguntas reales oficiales</div></div>
+    <div class="pack-item"><div class="pi">🎥</div><div>Clases en video — Biología, Química, Matemáticas</div></div>
+    <div class="pack-item"><div class="pi">💡</div><div>Consejos y estrategias para responder rápido</div></div>
+    <div class="pack-item"><div class="pi">🧘</div><div>Taller manejo del estrés previo al examen</div></div>
+    <div class="pack-item"><div class="pi">📚</div><div>Libros recomendados y PreICFES completo</div></div>
+    <div class="pack-item"><div class="pi">🎓</div><div>Fórmate — material de refuerzo por materia</div></div>
+  </div>
+
+  <!-- BONOS -->
+  <div class="bonos-grid">
+    <div class="bono-card">
+      <span class="bono-tag">🎁 Bono exclusivo 1</span>
+      <div class="bono-title">DIAGNÓSTICO PREMIUM</div>
+      <p class="bono-desc">40 preguntas reales del ICFES + PDF personalizado con tu nombre, tu puntaje por área y tu plan de acción. Exclusivo para compradores.</p>
+    </div>
+    <div class="bono-card">
+      <span class="bono-tag">🏆 Bono exclusivo 2</span>
+      <div class="bono-title">SAQUEMOS 500</div>
+      <p class="bono-desc">Hacks, tips, links de estudio y plan estructurado para ir por el puntaje máximo en el Saber 11.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIOS ══ -->
+<section class="testimonios">
+  <h2>Lo que dicen<br>nuestros estudiantes</h2>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-stars">⭐⭐⭐⭐⭐</div>
+      <p class="test-text">"Hice el diagnóstico y descubrí que Matemáticas era mi punto débil. Estudié con el Pack y subí 80 puntos en el ICFES."</p>
+      <div class="test-author">Valentina G.</div>
+      <div class="test-city">Bogotá, 2025</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">⭐⭐⭐⭐⭐</div>
+      <p class="test-text">"La metodología es increíble. Por primera vez supe exactamente qué estudiar cada semana. Llegué al examen sin nervios."</p>
+      <div class="test-author">Sebastián M.</div>
+      <div class="test-city">Medellín, 2025</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">⭐⭐⭐⭐⭐</div>
+      <p class="test-text">"Vale cada peso. Los videos, los simulacros y el bono Saquemos 500 fueron lo que necesitaba para alcanzar mi puntaje."</p>
+      <div class="test-author">Isabella R.</div>
+      <div class="test-city">Cali, 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRECIO + CTA ══ -->
+<section class="cta-sec" id="cta">
+  <h2>Empieza hoy.<br>El examen no espera.</h2>
+  <p class="cta-sub-text">Acceso inmediato a todo el Pack + los 2 bonos exclusivos. Pago seguro a través de Hotmart.</p>
+
+  <div class="precio-wrap">
+    <div class="precio-badge">73% OFF</div>
+    <div class="p-old">Precio normal: $187.000 COP</div>
+    <div class="p-new"><sup>$</sup>47.000</div>
+    <div class="p-tag">✅ Pago único · Acceso inmediato · 2 bonos incluidos</div>
+  </div>
+
+  <div class="garantia">
+    <span style="font-size:24px">🔒</span>
+    <span>Pago 100% seguro con Hotmart. Plataforma de confianza con más de 30 millones de compradores en Latinoamérica.</span>
+  </div>
+
+  <div class="timer-row">
+    ⏰ Oferta disponible por:
+    <div class="t-box"><span class="t-num" id="th">00</span><span class="t-unit">HRS</span></div>
+    <div class="t-box"><span class="t-num" id="tm">00</span><span class="t-unit">MIN</span></div>
+    <div class="t-box"><span class="t-num" id="ts">00</span><span class="t-unit">SEG</span></div>
+  </div>
+
+  <a class="btn-hotmart" href="https://pay.hotmart.com/U104826349T" target="_blank">
+    🛒 QUIERO EL MEGA PACK — $47.000
+  </a>
+  <p class="btn-sub">📲 Acceso inmediato después del pago · Entrega automática por Hotmart</p>
+</section>
+
+<!-- GARANTIA -->
+<section class="garantia-sec">
+  <div class="g-icon">🛡️</div>
+  <h3>Compra con confianza</h3>
+  <p>Hotmart garantiza tu compra. Si tienes algún inconveniente con el acceso al material, tienes respaldo total de la plataforma.</p>
+</section>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta" id="sticky">
+  <a class="btn-sticky" href="https://pay.hotmart.com/U104826349T" target="_blank">
+    🛒 Adquirir Mega Pack — $47.000 →
+  </a>
+</div>
+
+<script>
+// ══ PREGUNTAS ══
+const Qs=[
+  {area:'Lectura Crítica',color:'#e05820',ctx:`Eduardo Galeano: "La humanidad entera paga las consecuencias de la ruina de la tierra... el veinticinco por ciento de la humanidad comete el setenta y cinco por ciento de los crímenes contra la naturaleza."`,q:'Cuando Galeano dice "el planeta enloquece" y "la naturaleza sufre", el recurso literario es:',opts:['Personificación','Hipérbole','Analogía','Metáfora'],ok:0,exp:'La personificación atribuye acciones humanas (enloquecer, sufrir) a elementos naturales.'},
+  {area:'Lectura Crítica',color:'#e05820',ctx:null,q:'Heráclito decía "es imposible bañarse dos veces en el mismo río". Esto significa principalmente que:',opts:['Los ríos son peligrosos','Todo está en constante cambio','El agua siempre fluye igual','Los ríos tienen corrientes'],ok:1,exp:'Heráclito planteaba que todo cambia constantemente — el río y el bañista son diferentes en cada momento.'},
+  {area:'Matemáticas',color:'#1a6aaa',ctx:null,q:'Una escalera de 10 m apoya sobre un muro con base a 6 m. ¿Cuánto mide el seno del ángulo con el suelo?',opts:['0.6','0.8','0.75','0.5'],ok:1,exp:'Altura = √(100-36) = 8m. Seno = opuesto/hipotenusa = 8/10 = 0.8'},
+  {area:'Matemáticas',color:'#1a6aaa',ctx:null,q:'Un conjunto tiene promedio 10 y desviación 4. Si se suman 5 a todos los datos:',opts:['Promedio 15, desviación 9','Promedio 15, desviación 4','Promedio 10, desviación 4','Promedio 10, desviación 9'],ok:1,exp:'Sumar constante sube el promedio (15) pero NO cambia la dispersión. Desviación sigue en 4.'},
+  {area:'Ciencias Naturales',color:'#1a8a50',ctx:null,q:'¿En qué consiste fundamentalmente la fotosíntesis?',opts:['Producir oxígeno','Absorber minerales','Transformar energía solar en química','Eliminar CO₂'],ok:2,exp:'La fotosíntesis convierte energía lumínica en glucosa. El O₂ es solo subproducto.'},
+  {area:'Ciencias Naturales',color:'#1a8a50',ctx:null,q:'En diabetes tipo 1 se inyecta insulina porque:',opts:['El hígado no produce glucosa','El páncreas no produce insulina','Los riñones no filtran','El corazón bombea lento'],ok:1,exp:'El sistema inmune destruye células beta del páncreas. Sin insulina la glucosa no entra a las células.'},
+  {area:'Comp. Ciudadanas',color:'#8a1a8a',ctx:null,q:'La función principal de la Corte Constitucional en Colombia es:',opts:['Elegir al presidente','Verificar que las leyes respeten la Constitución','Administrar recursos','Dirigir las fuerzas militares'],ok:1,exp:'La Corte ejerce control de constitucionalidad — verifica coherencia entre leyes y la Constitución.'},
+  {area:'Comp. Ciudadanas',color:'#8a1a8a',ctx:null,q:'El Antiguo Régimen (antes de la Revolución Francesa) fue dominado por:',opts:['Burguesía y artesanos','Aristocracia e iglesia','Campesinos y militares','Comerciantes y banqueros'],ok:1,exp:'El Antiguo Régimen era feudal — la nobleza y el clero concentraban el poder y los privilegios.'},
+  {area:'Inglés',color:'#aa6a00',ctx:null,q:'Alfred told his wife: "The director said I ___ start working next Monday."',opts:['can','could','will','would to'],ok:1,exp:'Reported speech pasado: "can" → "could". Estructura: said + could + infinitivo.'},
+  {area:'Inglés',color:'#aa6a00',ctx:null,q:'"One Hundred Years of Solitude" is read worldwide because it ___ into many languages.',opts:['has been translated','have been translated','was translate','is translating'],ok:0,exp:'Voz pasiva presente perfecto con "it" (singular): has been + past participle.'},
+];
+
+let qi=0,resp={};
+
+function startDiag(){
+  document.querySelector('.diag-intro').style.display='none';
+  document.getElementById('quiz-wrap').style.display='block';
+  showQ();
+}
+
+function showQ(){
+  const p=Qs[qi];
+  document.getElementById('qprog').style.width=Math.round((qi/Qs.length)*100)+'%';
+  document.getElementById('qarea').textContent=`${qi+1}/10 — ${p.area.toUpperCase()}`;
+  const ctx=document.getElementById('qctx');
+  if(p.ctx){ctx.style.display='block';ctx.textContent=p.ctx;}else ctx.style.display='none';
+  document.getElementById('qq').textContent=p.q;
+  const oc=document.getElementById('qopts');
+  oc.innerHTML='';
+  ['A','B','C','D'].forEach((l,i)=>{
+    const b=document.createElement('button');
+    b.className='quiz-opt';
+    b.innerHTML=`<span class="quiz-opt-l">${l}</span><span>${p.opts[i]}</span>`;
+    b.onclick=()=>pick(i);
+    oc.appendChild(b);
+  });
+  document.getElementById('qfb').style.display='none';
+  document.getElementById('qfb').className='quiz-fb';
+  document.getElementById('qnext').style.display='none';
+}
+
+function pick(idx){
+  const p=Qs[qi];
+  const fb=document.getElementById('qfb');
+  if(fb.style.display!=='none')return;
+  const ok=idx===p.ok;
+  resp[qi]={ok,area:p.area,color:p.color};
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts[p.ok].classList.add('correct');
+  if(!ok)opts[idx].classList.add('wrong');
+  fb.style.display='block';
+  fb.className='quiz-fb '+(ok?'ok':'fail');
+  document.getElementById('qfbt').textContent=ok?'✅ Correcto! ':'❌ Incorrecto. ';
+  document.getElementById('qfbx').textContent=p.exp;
+  document.getElementById('qnext').style.display='block';
+}
+
+function nextQ(){
+  qi++;
+  if(qi>=Qs.length)showResult();
+  else showQ();
+}
+
+function showResult(){
+  document.getElementById('quiz-wrap').style.display='none';
+  const rw=document.getElementById('result-wrap');
+  rw.style.display='block';
+  const total=Qs.length;
+  const correct=Object.values(resp).filter(r=>r.ok).length;
+  const pct=Math.round((correct/total)*100);
+  document.getElementById('ricon').textContent=pct>=70?'💪':pct>=50?'⚠️':'🚨';
+  document.getElementById('rtitle').textContent=pct>=70?'¡Buen nivel!':'Fallas detectadas';
+  document.getElementById('rscore').innerHTML=`<strong>${correct} de ${total}</strong> correctas (${pct}%)`;
+  const areas={};
+  Qs.forEach((p,i)=>{
+    if(!areas[p.area])areas[p.area]={c:p.color,t:0,ok:0};
+    areas[p.area].t++;
+    if(resp[i]&&resp[i].ok)areas[p.area].ok++;
+  });
+  const rc=document.getElementById('rareas');
+  rc.innerHTML='';
+  Object.entries(areas).sort((a,b)=>(a[1].ok/a[1].t)-(b[1].ok/b[1].t)).forEach(([name,a])=>{
+    const ap=Math.round((a.ok/a.t)*100);
+    const d=ap<60;
+    const el=document.createElement('div');
+    el.className='r-area '+(d?'debil':'fuerte');
+    el.innerHTML=`<div class="r-area-top"><div class="r-area-name">${d?'⚠️ ':'✅ '}${name}</div><div class="r-area-pct">${ap}%</div></div><div class="r-bar"><div class="r-bar-fill" style="width:${ap}%"></div></div><div class="r-msg">${d?`Solo ${a.ok}/${a.t} correctas — área prioritaria para reforzar.`:`${a.ok}/${a.t} correctas — mantén este nivel.`}</div>`;
+    rc.appendChild(el);
+  });
+}
+
+// ══ TIMER ══
+function tick(){
+  const now=new Date(),end=new Date();
+  end.setHours(23,0,0,0);
+  if(now>=end)end.setDate(end.getDate()+1);
+  const d=Math.max(0,end-now);
+  document.getElementById('th').textContent=String(Math.floor(d/3600000)).padStart(2,'0');
+  document.getElementById('tm').textContent=String(Math.floor((d%3600000)/60000)).padStart(2,'0');
+  document.getElementById('ts').textContent=String(Math.floor((d%60000)/1000)).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+// ══ STICKY CTA ══
+window.addEventListener('scroll',()=>{
+  const sticky=document.getElementById('sticky');
+  if(window.scrollY>400)sticky.classList.add('visible');
+  else sticky.classList.remove('visible');
+});
+</script>
+</body>
+</html>
